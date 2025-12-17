@@ -1,21 +1,58 @@
-executor: LocalExecutor
-
-auth:
-  username: admin
-  password:
-    secretRef: om-airflow-secret
-    secretKey: OM_PASSWORD
-
-config:
-  AIRFLOW__CORE__LOAD_EXAMPLES:
-    value: "False"
-
-  AIRFLOW__API__AUTH_BACKENDS:
-    value: "airflow.api.auth.backend.basic_auth"
-
 postgresql:
   enabled: false
+
+executor: LocalExecutor
 
 webserver:
   service:
     type: LoadBalancer
+    port: 8080
+
+env:
+  - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+    valueFrom:
+      secretKeyRef:
+        name: airflow-metadata
+        key: connection
+
+
+  - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
+    valueFrom:
+      secretKeyRef:
+        name: airflow-metadata
+        key: connection
+
+
+  - name: AIRFLOW__CORE__LOAD_EXAMPLES
+    value: "False"
+
+  - name: AIRFLOW__API__AUTH_BACKENDS
+    value: "airflow.api.auth.backend.basic_auth"
+
+users:
+  - username: admin
+    password: admin
+    role: Admin
+    email: admin@example.com
+    firstName: Admin
+    lastName: User
+
+logs:
+  persistence:
+    enabled: true
+    size: 1Gi
+
+scheduler:
+  replicas: 1
+
+
+triggerer:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 1Gi
+
+
+workers:
+  enabled: false
+
