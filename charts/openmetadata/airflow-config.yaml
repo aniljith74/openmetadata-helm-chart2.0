@@ -29,6 +29,16 @@ webserver:
 postgresql:
   enabled: false
 
+data:
+  metadataConnection:
+    protocol: postgresql
+    user: airflow
+    pass: airflow
+    host: postgres.daap-dev.svc.cluster.local
+    port: 5432
+    db: airflow
+    sslmode: disable
+
 logs:
   persistence:
     enabled: true
