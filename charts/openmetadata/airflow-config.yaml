@@ -1,0 +1,15 @@
+executor: LocalExecutor
+
+config:
+  AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+  AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+
+webserver:
+  service:
+    type: LoadBalancer
+
+workers:
+  enabled: false
+
+triggerer:
+  enabled: false

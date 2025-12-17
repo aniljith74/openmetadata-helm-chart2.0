@@ -33,7 +33,7 @@ openmetadata:
       idleThreadTimeout: "1 minute"
     elasticsearch:
       enabled: true
-      host: opensearch
+      host: opensearch-cluster-master.daap-dev.svc.cluster.local
       searchType: opensearch
       port: 9200
       scheme: http
@@ -59,17 +59,43 @@ openmetadata:
           secretKey: openmetadata-elasticsearch-password
     database:
       enabled: true
-      host: mysql
-      port: 3306
-      driverClass: com.mysql.cj.jdbc.Driver
-      dbScheme: mysql
-      databaseName: openmetadata_db
+      host:
+        valueFrom:
+          secretKeyRef:
+            name: om-postgres-secret
+            key: POSTGRES_HOST
+
+      port:
+        valueFrom:
+          secretKeyRef:
+            name: om-postgres-secret
+            key: POSTGRES_PORT
+
+      driverClass: org.postgresql.Driver
+      dbScheme: postgresql
+
+      databaseName:
+        valueFrom:
+          secretKeyRef:
+            name: om-postgres-secret
+            key: POSTGRES_DB
+
       auth:
-        username: openmetadata_user
+        username:
+          valueFrom:
+            secretKeyRef:
+              name: om-postgres-secret
+              key: POSTGRES_USER
+
         password:
-          secretRef: mysql-secrets
-          secretKey: openmetadata-mysql-password
-      dbParams: "allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC"
+          valueFrom:
+            secretKeyRef:
+              name: om-postgres-secret
+              key: POSTGRES_PASSWORD
+
+      dbParams: "sslmode=disable"
+
+
       maxSize: 50
       minSize: 10
       initialSize: 10
@@ -81,7 +107,7 @@ openmetadata:
       enabled: true
       className: "org.openmetadata.service.clients.pipeline.airflow.AirflowRESTClient"
       # endpoint url for airflow
-      apiEndpoint: http://openmetadata-dependencies-web:8080
+      apiEndpoint: http://airflow-web.daap-dev.svc.cluster.local:8080
       # this will be the api endpoint url of OpenMetadata Server
       metadataApiEndpoint: http://openmetadata:8585/api
       # possible values are "no-ssl", "ignore", "validate"
@@ -96,8 +122,8 @@ openmetadata:
         enabled: true
         username: admin
         password:
-          secretRef: airflow-secrets
-          secretKey: openmetadata-airflow-password
+          secretRef: om-airflow-secret
+          secretKey: OM_PASSWORD
         trustStorePath: ""
         trustStorePassword:
           secretRef: ""
@@ -384,10 +410,9 @@ networkPolicy:
   #   callbackUrl: "<callback_url>"
 
 image:
-  repository: docker.getcollate.io/openmetadata/server
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-  pullPolicy: "Always"
+  repository: daappoc25.azurecr.io/openmetadata
+  tag: latest
+  pullPolicy: IfNotPresent
 
 sidecars: []
 # - name: "busybox"

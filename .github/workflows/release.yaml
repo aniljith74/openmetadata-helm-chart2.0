@@ -25,7 +25,7 @@ jobs:
       - name: Add Helm repos
         run: |
           helm repo add opensearch https://opensearch-project.github.io/helm-charts/
-          helm repo add mysql https://charts.bitnami.com/bitnami
+          #helm repo add mysql https://charts.bitnami.com/bitnami
           helm repo add airflow https://airflow-helm.github.io/charts
 
       - name: Run chart-releaser
