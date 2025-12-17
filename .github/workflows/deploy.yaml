@@ -57,6 +57,13 @@ jobs:
           helm repo add opensearch https://opensearch-project.github.io/helm-charts
           helm repo add apache-airflow https://airflow.apache.org
           helm repo update
+                            
+      - name: Deploy OpenMetadata
+        run: |
+          helm upgrade --install openmetadata open-metadata/openmetadata \
+            --namespace daap-dev \
+            -f charts/openmetadata/values.yaml \
+            --timeout 10m0s
 
       - name: Deploy OpenSearch
         run: |
@@ -68,16 +75,7 @@ jobs:
         run: |
           helm upgrade --install airflow apache-airflow/airflow \
             --namespace daap-dev \
-            --create-namespace \
             --set executor=LocalExecutor \
-            --set webserver.service.type=LoadBalancer \
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
 
-
-      - name: Deploy OpenMetadata
-        run: |
-          helm upgrade --install openmetadata open-metadata/openmetadata \
-            --namespace daap-dev \
-            -f charts/openmetadata/values.yaml \
-            --timeout 10m0s
