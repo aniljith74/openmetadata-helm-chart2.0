@@ -1,41 +1,37 @@
-postgresql:
-  enabled: false
-
-
 executor: LocalExecutor
+
+# Airflow configuration (maps to airflow.cfg)
+config:
+  AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+  AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
+  AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
+
+# Environment variables (MUST be an array)
+env:
+  - name: AIRFLOW__CORE__FERNET_KEY
+    valueFrom:
+      secretKeyRef:
+        name: airflow-fernet-key
+        key: fernet-key
+
+# Metadata DB connection (secret-based)
+envFrom:
+  - secretRef:
+      name: airflow-metadata
 
 webserver:
   service:
     type: LoadBalancer
 
+postgresql:
+  enabled: false   
 
-env:
-  AIRFLOW__CORE__LOAD_EXAMPLES: "False"
-  AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
-
-
-envFromSecrets:
-  - airflow-metadata
-
-users:
-  - username: admin
-    password: admin
-    role: Admin
-    email: admin@example.com
-    firstName: Admin
-    lastName: User
-
-logs:
+workers:
   persistence:
     enabled: true
     size: 1Gi
 
-
-scheduler:
-  replicas: 1
-
 triggerer:
-  enabled: true
   persistence:
     enabled: true
     size: 1Gi
