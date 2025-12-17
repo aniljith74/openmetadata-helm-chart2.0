@@ -45,5 +45,4 @@ extraEnvs:
     value: "true"
 
 sysctl:
-  enabled: true
-  vmMaxMapCount: 262144
+  enabled: false
