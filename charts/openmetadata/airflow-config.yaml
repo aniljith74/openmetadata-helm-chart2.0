@@ -1,5 +1,11 @@
 executor: LocalExecutor
 
+auth:
+  username: admin
+  password:
+    secretRef: om-airflow-secret
+    secretKey: OM_PASSWORD
+
 config:
   AIRFLOW__CORE__LOAD_EXAMPLES:
     value: "False"
@@ -7,25 +13,9 @@ config:
   AIRFLOW__API__AUTH_BACKENDS:
     value: "airflow.api.auth.backend.basic_auth"
 
+postgresql:
+  enabled: false
+
 webserver:
   service:
     type: LoadBalancer
-
-scheduler:
-  replicas: 1
-
-triggerer:
-  enabled: false
-
-workers:
-  replicas: 0
-
-dags:
-  persistence:
-    enabled: true
-    size: 1Gi
-
-logs:
-  persistence:
-    enabled: true
-    size: 1Gi

@@ -68,14 +68,11 @@ jobs:
         run: |
           helm upgrade --install airflow apache-airflow/airflow \
             --namespace daap-dev \
-            --set images.airflow.repository=apache/airflow \
-            --set images.airflow.tag=2.9.1 \
+            --create-namespace \
+            --set executor=LocalExecutor \
             --set webserver.service.type=LoadBalancer \
-            --set "workers.persistence.enabled=true" \
-            --set "workers.persistence.size=1Gi" \
-            --set "triggerer.persistence.enabled=true" \
-            --set "triggerer.persistence.size=1Gi" \
-            -f charts/openmetadata/airflow-config.yaml
+            -f charts/openmetadata/airflow-config.yaml \
+            --timeout 15m
 
 
       - name: Deploy OpenMetadata
