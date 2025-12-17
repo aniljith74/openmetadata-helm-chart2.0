@@ -43,3 +43,4 @@ logs:
   persistence:
     enabled: true
     size: 5Gi
+    storageClassName: managed-csi
