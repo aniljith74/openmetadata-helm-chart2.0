@@ -1,30 +1,33 @@
 executor: LocalExecutor
 
-# Airflow configuration (maps to airflow.cfg)
+# airflow.cfg (THIS IS THE BIG FIX)
 config:
-  AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-  AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
-  AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
+  core:
+    load_examples: false
+  webserver:
+    expose_config: true
+  api:
+    auth_backends: airflow.api.auth.backend.basic_auth
 
-# Environment variables (MUST be an array)
+# Literal env vars ONLY
 env:
-  - name: AIRFLOW__CORE__FERNET_KEY
-    valueFrom:
-      secretKeyRef:
-        name: airflow-fernet-key
-        key: fernet-key
+  - name: AIRFLOW_HOME
+    value: /opt/airflow
 
-# Metadata DB connection (secret-based)
+# Secrets go HERE (this is what you were missing)
 envFrom:
   - secretRef:
       name: airflow-metadata
+  - secretRef:
+      name: airflow-fernet-key
 
 webserver:
   service:
     type: LoadBalancer
 
+# You are using external Postgres → MUST disable this
 postgresql:
-  enabled: false   
+  enabled: false
 
 workers:
   persistence:

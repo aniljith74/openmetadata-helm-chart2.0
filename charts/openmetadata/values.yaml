@@ -94,7 +94,7 @@ image:
 fullnameOverride: openmetadata
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 8585
   adminPort: 8586
 
