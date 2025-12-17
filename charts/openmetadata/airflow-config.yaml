@@ -1,6 +1,6 @@
 executor: LocalExecutor
 
-# airflow.cfg (THIS IS THE BIG FIX)
+# airflow.cfg
 config:
   core:
     load_examples: false
@@ -14,7 +14,7 @@ env:
   - name: AIRFLOW_HOME
     value: /opt/airflow
 
-# Secrets go HERE (this is what you were missing)
+# Secrets
 envFrom:
   - secretRef:
       name: airflow-metadata
@@ -25,16 +25,11 @@ webserver:
   service:
     type: LoadBalancer
 
-# You are using external Postgres → MUST disable this
+# You are using external Postgres
 postgresql:
   enabled: false
 
-workers:
+logs:
   persistence:
     enabled: true
-    size: 1Gi
-
-triggerer:
-  persistence:
-    enabled: true
-    size: 1Gi
+    size: 5Gi

@@ -78,10 +78,6 @@ jobs:
           helm upgrade --install airflow apache-airflow/airflow \
             --namespace daap-dev \
             --set executor=LocalExecutor \
-            --set scheduler.logs.persistence.enabled=true \
-            --set scheduler.logs.persistence.size=5Gi \
-            --set triggerer.logs.persistence.enabled=true \
-            --set triggerer.logs.persistence.size=5Gi
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
 
