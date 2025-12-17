@@ -61,7 +61,7 @@ jobs:
 
       - name: Deploy OpenSearch
         run: |
-          kubectl apply -f opensearch-sysctl-daemonset.yaml
+          kubectl apply -f charts/openmetadata/opensearch-sysctl-daemonset.yaml
           helm upgrade --install opensearch opensearch/opensearch \
             --namespace daap-dev \
             -f charts/openmetadata/values-opensearch.yaml
