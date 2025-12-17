@@ -63,7 +63,7 @@ jobs:
           helm upgrade --install openmetadata open-metadata/openmetadata \
             --namespace daap-dev \
             -f charts/openmetadata/values.yaml \
-            --timeout 10m0s
+            --timeout 15m
 
       - name: Deploy OpenSearch
         run: |
