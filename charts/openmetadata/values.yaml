@@ -35,11 +35,10 @@ openmetadata:
       databaseName: openmetadata_db
       auth:
         username: om_user
-        password: admin
+        password:
+          secretRef: mysql-secrets
+          secretKey: openmetadata-mysql-password
       dbParams: "sslmode=disable"
-      maxSize: 50
-      minSize: 10
-      initialSize: 10
 
     pipelineServiceClientConfig:
       enabled: true
@@ -47,12 +46,12 @@ openmetadata:
       apiEndpoint: http://airflow-web.daap-dev.svc.cluster.local:8080
       metadataApiEndpoint: http://openmetadata:8585/api
       verifySsl: "no-ssl"
-      healthCheckInterval: 300
       auth:
         enabled: true
         username: admin
-        password: admin
-
+        password:
+          secretRef: airflow-secrets
+          secretKey: openmetadata-airflow-password
 
     authorizer:
       enabled: true
