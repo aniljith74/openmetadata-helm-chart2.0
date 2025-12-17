@@ -1,11 +1,5 @@
 executor: LocalExecutor
 
-auth:
-  username: admin
-  password:
-    secretRef: om-airflow-secret
-    secretKey: OM_PASSWORD
-
 config:
   AIRFLOW__CORE__LOAD_EXAMPLES:
     value: "False"
