@@ -68,6 +68,7 @@ jobs:
 
       - name: Deploy Airflow
         run: |
+          kubectl apply -f charts/openmetadata/airflow-pvc.yaml
           helm upgrade --install airflow apache-airflow/airflow \
             --namespace daap-dev \
             --set executor=LocalExecutor \
