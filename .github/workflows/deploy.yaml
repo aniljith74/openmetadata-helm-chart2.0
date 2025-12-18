@@ -68,10 +68,13 @@ jobs:
 
       - name: Deploy Airflow
         run: |
-          kubectl apply -f charts/openmetadata/airflow-pvc.yaml
+          #kubectl apply -f charts/openmetadata/airflow-pvc.yaml
           helm upgrade --install airflow apache-airflow/airflow \
             --namespace daap-dev \
             --set executor=LocalExecutor \
+            --set logs.persistence.enabled=true \
+            --set logs.persistence.size=10Gi \
+            --set logs.persistence.storageClassName=managed-csi \
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
 
