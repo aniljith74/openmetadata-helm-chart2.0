@@ -19,40 +19,45 @@ airflow:
     - secretRef:
         name: airflow-fernet-key
 
-api:
-  startupProbe: null
+  api:
+    startupProbe: null
 
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
+    livenessProbe:
+      initialDelaySeconds: 180
+      periodSeconds: 30
+      timeoutSeconds: 30
+      failureThreshold: 5
 
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 15
-    timeoutSeconds: 15
+    readinessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 15
+      timeoutSeconds: 15
 
-scheduler:
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
+  scheduler:
+    livenessProbe:
+      initialDelaySeconds: 180
+      periodSeconds: 30
+      timeoutSeconds: 30
+      failureThreshold: 5
 
-triggerer:
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
+  triggerer:
+    livenessProbe:
+      initialDelaySeconds: 180
+      periodSeconds: 30
+      timeoutSeconds: 30
+      failureThreshold: 5
 
-dagProcessor:
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
+  dagProcessor:
+    livenessProbe:
+      initialDelaySeconds: 180
+      periodSeconds: 30
+      timeoutSeconds: 30
+      failureThreshold: 5
+
+  logs:
+    persistence:
+      enabled: true
+      existingClaim: airflow-logs
 
 postgresql:
   enabled: false
@@ -66,9 +71,3 @@ data:
     port: 5432
     db: airflow
     sslmode: disable
-
-
-logs:
-  persistence:
-    enabled: true
-    existingClaim: airflow-logs
