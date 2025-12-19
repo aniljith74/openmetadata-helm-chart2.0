@@ -23,7 +23,10 @@ airflow:
 
   api:
     startupProbe:
-      enabled: false  
+      enabled: true
+      initialDelaySeconds: 180
+      periodSeconds: 20
+      failureThreshold: 30
 
     livenessProbe:
       initialDelaySeconds: 180
