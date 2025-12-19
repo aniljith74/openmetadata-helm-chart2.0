@@ -24,21 +24,26 @@ airflow:
   api:
     startupProbe:
       enabled: true
-      initialDelaySeconds: 180
-      periodSeconds: 20
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 30
+      periodSeconds: 10
       failureThreshold: 30
 
     livenessProbe:
-      initialDelaySeconds: 180
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 120
       periodSeconds: 30
-      timeoutSeconds: 30
+      timeoutSeconds: 5
       failureThreshold: 5
 
     readinessProbe:
+      tcpSocket:
+        port: 8080
       initialDelaySeconds: 60
       periodSeconds: 15
-      timeoutSeconds: 15
-
+      timeoutSeconds: 5
 
   scheduler:
     livenessProbe:
