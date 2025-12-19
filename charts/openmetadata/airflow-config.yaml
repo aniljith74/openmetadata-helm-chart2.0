@@ -30,10 +30,7 @@ airflow:
 
 
 webserver:
-  startupProbe:
-    failureThreshold: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
+  startupProbe: {}
 
   livenessProbe:
     initialDelaySeconds: 300
