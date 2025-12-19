@@ -4,7 +4,6 @@ airflow:
   config:
     core:
       load_examples: "false"
-
     api:
       auth_backends: >
         airflow.api.auth.backend.session,
@@ -21,58 +20,53 @@ airflow:
         name: airflow-fernet-key
 
 
-  api:
-    startupProbe:
-      enabled: true
-      tcpSocket:
-        port: 8080
-      initialDelaySeconds: 30
-      periodSeconds: 10
-      failureThreshold: 30
+apiServer:
+  startupProbe:
+    enabled: false   
 
-    livenessProbe:
-      tcpSocket:
-        port: 8080
-      initialDelaySeconds: 120
-      periodSeconds: 30
-      timeoutSeconds: 5
-      failureThreshold: 5
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 5
 
-    readinessProbe:
-      tcpSocket:
-        port: 8080
-      initialDelaySeconds: 60
-      periodSeconds: 15
-      timeoutSeconds: 5
-
-  scheduler:
-    livenessProbe:
-      initialDelaySeconds: 180
-      periodSeconds: 30
-      timeoutSeconds: 30
-      failureThreshold: 5
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 10
 
 
-  triggerer:
-    livenessProbe:
-      initialDelaySeconds: 180
-      periodSeconds: 30
-      timeoutSeconds: 30
-      failureThreshold: 5
+scheduler:
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 180
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
 
 
-  dagProcessor:
-    livenessProbe:
-      initialDelaySeconds: 180
-      periodSeconds: 30
-      timeoutSeconds: 30
-      failureThreshold: 5
+triggerer:
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 180
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
 
+dagProcessor:
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 180
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
 
-  logs:
-    persistence:
-      enabled: true
-      existingClaim: airflow-logs
+logs:
+  persistence:
+    enabled: true
+    existingClaim: airflow-logs
 
 postgresql:
   enabled: false
