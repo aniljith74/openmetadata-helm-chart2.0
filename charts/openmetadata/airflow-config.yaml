@@ -8,6 +8,15 @@ config:
     expose_config: true
   api:
     auth_backends: airflow.api.auth.backend.basic_auth
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 20
+      timeoutSeconds: 5
+      failureThreshold: 5
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
 
 # Literal env vars ONLY
 env:
