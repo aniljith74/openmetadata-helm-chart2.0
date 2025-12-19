@@ -51,10 +51,6 @@ scheduler:
     timeoutSeconds: 30
     failureThreshold: 5
 
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 20
-    timeoutSeconds: 20
 
 
 webserver:
