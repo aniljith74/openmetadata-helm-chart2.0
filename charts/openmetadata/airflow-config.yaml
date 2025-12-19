@@ -1,5 +1,10 @@
 executor: LocalExecutor
 
+images:
+  airflow:
+    repository: apache/airflow
+    tag: 2.7.3
+
 airflow:
   config:
     core:
@@ -21,18 +26,15 @@ airflow:
 
 
 apiServer:
-  startupProbe:
-    enabled: false   
+  startupProbe: {}
 
   livenessProbe:
-    enabled: true
     initialDelaySeconds: 120
     periodSeconds: 30
     timeoutSeconds: 10
     failureThreshold: 5
 
   readinessProbe:
-    enabled: true
     initialDelaySeconds: 60
     periodSeconds: 15
     timeoutSeconds: 10
@@ -40,7 +42,6 @@ apiServer:
 
 scheduler:
   livenessProbe:
-    enabled: true
     initialDelaySeconds: 180
     periodSeconds: 30
     timeoutSeconds: 30
@@ -49,19 +50,19 @@ scheduler:
 
 triggerer:
   livenessProbe:
-    enabled: true
     initialDelaySeconds: 180
     periodSeconds: 30
     timeoutSeconds: 30
     failureThreshold: 5
 
+
 dagProcessor:
   livenessProbe:
-    enabled: true
     initialDelaySeconds: 180
     periodSeconds: 30
     timeoutSeconds: 30
     failureThreshold: 5
+
 
 logs:
   persistence:
