@@ -21,20 +21,18 @@ airflow:
 
 api:
   startupProbe:
-    failureThreshold: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
+    enabled: false
 
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 90
     periodSeconds: 20
-    timeoutSeconds: 5
+    timeoutSeconds: 10
     failureThreshold: 5
 
   readinessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 60
     periodSeconds: 10
-    timeoutSeconds: 5
+    timeoutSeconds: 10
 
 
 scheduler:
