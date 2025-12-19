@@ -5,8 +5,8 @@ metadata:
   namespace: daap-dev
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-csi
+    - ReadWriteMany
+  storageClassName: azurefile-csi
   resources:
     requests:
       storage: 10Gi

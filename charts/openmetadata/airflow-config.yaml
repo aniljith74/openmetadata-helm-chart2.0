@@ -42,4 +42,6 @@ data:
 logs:
   persistence:
     enabled: true
-    existingClaim: airflow-logs
+    storageClassName: azurefile-csi
+    accessMode: ReadWriteMany
+    size: 10Gi
