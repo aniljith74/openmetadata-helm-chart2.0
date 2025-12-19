@@ -1,40 +1,67 @@
 executor: LocalExecutor
 
-# airflow.cfg
-config:
-  core:
-    load_examples: false
-  webserver:
-    expose_config: true
-  api:
-    auth_backends: airflow.api.auth.backend.basic_auth
-    livenessProbe:
-      initialDelaySeconds: 60
-      periodSeconds: 20
-      timeoutSeconds: 5
-      failureThreshold: 5
-    readinessProbe:
-      initialDelaySeconds: 30
-      periodSeconds: 10
-      timeoutSeconds: 5
+airflow:
+  config:
+    core:
+      load_examples: "false"
+    webserver:
+      expose_config: "true"
+    api:
+      auth_backends: airflow.api.auth.backend.basic_auth
 
-# Literal env vars ONLY
-env:
-  - name: AIRFLOW_HOME
-    value: /opt/airflow
+  env:
+    - name: AIRFLOW_HOME
+      value: /opt/airflow
 
-# Secrets
-envFrom:
-  - secretRef:
-      name: airflow-metadata
-  - secretRef:
-      name: airflow-fernet-key
+  envFrom:
+    - secretRef:
+        name: airflow-metadata
+    - secretRef:
+        name: airflow-fernet-key
+
+api:
+  startupProbe:
+    enabled: true
+    failureThreshold: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 5
+    failureThreshold: 5
+
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+
+
+scheduler:
+  startupProbe:
+    enabled: true
+    failureThreshold: 30
+    periodSeconds: 10
+    timeoutSeconds: 30
+
+  livenessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
+
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 20
+
 
 webserver:
   service:
     type: LoadBalancer
 
-# You are using external Postgres
+
 postgresql:
   enabled: false
 
@@ -47,6 +74,7 @@ data:
     port: 5432
     db: airflow
     sslmode: disable
+
 
 logs:
   persistence:
