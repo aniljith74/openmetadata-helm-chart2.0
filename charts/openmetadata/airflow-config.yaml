@@ -20,8 +20,7 @@ airflow:
         name: airflow-fernet-key
 
 api:
-  startupProbe:
-    enabled: false
+  startupProbe: null
 
   livenessProbe:
     initialDelaySeconds: 180
