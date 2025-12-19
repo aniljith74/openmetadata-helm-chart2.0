@@ -9,10 +9,14 @@ airflow:
   config:
     core:
       load_examples: "false"
+
     api:
       auth_backends: >
         airflow.api.auth.backend.session,
         airflow.api.auth.backend.basic_auth
+
+    webserver:
+      expose_config: "true"
 
   env:
     - name: AIRFLOW_HOME
@@ -25,28 +29,12 @@ airflow:
         name: airflow-fernet-key
 
 
-apiServer:
-  startupProbe: {}
-
-  livenessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    timeoutSeconds: 10
-    failureThreshold: 5
-
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 15
-    timeoutSeconds: 10
-
-
 scheduler:
   livenessProbe:
     initialDelaySeconds: 180
     periodSeconds: 30
     timeoutSeconds: 30
     failureThreshold: 5
-
 
 triggerer:
   livenessProbe:
@@ -55,14 +43,12 @@ triggerer:
     timeoutSeconds: 30
     failureThreshold: 5
 
-
 dagProcessor:
   livenessProbe:
     initialDelaySeconds: 180
     periodSeconds: 30
     timeoutSeconds: 30
     failureThreshold: 5
-
 
 logs:
   persistence:
