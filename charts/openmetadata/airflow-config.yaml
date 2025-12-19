@@ -20,35 +20,40 @@ airflow:
         name: airflow-fernet-key
 
 api:
-  service:
-    type: LoadBalancer
   startupProbe:
     enabled: false
 
   livenessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 20
-    timeoutSeconds: 10
-    failureThreshold: 5
-
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 10
-
-
-scheduler:
-  startupProbe:
-    failureThreshold: 30
-    periodSeconds: 10
-    timeoutSeconds: 30
-
-  livenessProbe:
-    initialDelaySeconds: 120
+    initialDelaySeconds: 180
     periodSeconds: 30
     timeoutSeconds: 30
     failureThreshold: 5
 
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 15
+
+scheduler:
+  livenessProbe:
+    initialDelaySeconds: 180
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
+
+triggerer:
+  livenessProbe:
+    initialDelaySeconds: 180
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
+
+dagProcessor:
+  livenessProbe:
+    initialDelaySeconds: 180
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
 
 postgresql:
   enabled: false
