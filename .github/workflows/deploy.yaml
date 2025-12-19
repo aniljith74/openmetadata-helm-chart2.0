@@ -70,6 +70,7 @@ jobs:
         run: |
           helm upgrade --install airflow apache-airflow/airflow \
             --namespace daap-dev \
+            --version 1.11.0 \
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
 
