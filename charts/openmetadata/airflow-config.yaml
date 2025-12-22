@@ -10,6 +10,9 @@ airflow:
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
 
+  api:
+    auth_backends: airflow.api.auth.backend.basic_auth
+
   env:
     - name: AIRFLOW_HOME
       value: /opt/airflow
