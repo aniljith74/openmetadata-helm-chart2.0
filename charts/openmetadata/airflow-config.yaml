@@ -36,8 +36,8 @@ webserver:
       - name: airflow-ui
         port: 8080
         targetPort: 8080
-  startupProbe: {}
-
+  startupProbe:
+    enabled: false
   livenessProbe:
     initialDelaySeconds: 300
     periodSeconds: 30
