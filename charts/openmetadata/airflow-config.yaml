@@ -12,7 +12,6 @@ airflow:
 
     api:
       auth_backends: >
-        airflow.api.auth.backend.session,
         airflow.api.auth.backend.basic_auth
 
     webserver:
