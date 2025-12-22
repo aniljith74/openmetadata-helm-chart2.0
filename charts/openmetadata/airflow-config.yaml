@@ -9,6 +9,8 @@ airflow:
   config:
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
+  api:
+      auth_backends: airflow.api.auth.backend.session,airflow.api.auth.backend.basic_auth
   core:
     load_examples: "false"
 
@@ -24,7 +26,6 @@ airflow:
 
 
 webserver:
-  auth_backend: airflow.api.auth.backend.basic_auth
   service:
     type: LoadBalancer
     ports:
