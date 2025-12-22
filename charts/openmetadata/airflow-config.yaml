@@ -9,6 +9,8 @@ airflow:
   config:
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
+  core:
+    load_examples: "false"
 
   api:
     auth_backends: airflow.api.auth.backend.basic_auth
