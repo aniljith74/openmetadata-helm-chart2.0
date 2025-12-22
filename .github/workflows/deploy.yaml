@@ -73,4 +73,12 @@ jobs:
             --version 1.11.0 \
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
+          kubectl run airflow-db-migrate \
+            -n daap-dev \
+            --rm -it \
+            --image=apache/airflow:2.7.3 \
+            --restart=Never \
+            --env AIRFLOW__DATABASE__SQL_ALCHEMY_CONN="$(kubectl get secret airflow-metadata -n daap-dev -o jsonpath='{.data.connection}' | base64 --decode)" \
+            -- airflow db migrate
+
 
