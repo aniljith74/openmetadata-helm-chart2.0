@@ -8,12 +8,13 @@ images:
 airflow:
   config:
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-    AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
 
   env:
     - name: AIRFLOW_HOME
       value: /opt/airflow
+    - name: AIRFLOW__API__AUTH_BACKENDS
+      value: airflow.api.auth.backend.basic_auth
 
   envFrom:
     - secretRef:
