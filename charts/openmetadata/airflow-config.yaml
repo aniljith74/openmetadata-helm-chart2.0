@@ -37,7 +37,13 @@ webserver:
         port: 8080
         targetPort: 8080
   startupProbe:
-    enabled: false
+    httpGet:
+      path: /health
+      port: 8080
+    initialDelaySeconds: 180
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 30
   livenessProbe:
     initialDelaySeconds: 300
     periodSeconds: 30
