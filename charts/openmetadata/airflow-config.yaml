@@ -12,14 +12,9 @@ airflow:
   core:
     load_examples: "false"
 
-  api:
-    auth_backends: airflow.api.auth.backend.basic_auth
-
   env:
     - name: AIRFLOW_HOME
       value: /opt/airflow
-    - name: AIRFLOW__API__AUTH_BACKENDS
-      value: airflow.api.auth.backend.basic_auth
 
   envFrom:
     - secretRef:
@@ -29,6 +24,7 @@ airflow:
 
 
 webserver:
+  auth_backend: airflow.api.auth.backend.basic_auth
   service:
     type: LoadBalancer
     ports:
