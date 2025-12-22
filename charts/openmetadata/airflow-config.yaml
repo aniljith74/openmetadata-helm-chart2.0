@@ -7,16 +7,14 @@ images:
 
 airflow:
   config:
-    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
-  api:
-      auth_backends: airflow.api.auth.backend.session,airflow.api.auth.backend.basic_auth
-  core:
-    load_examples: "false"
+    core:
+      load_examples: "false"
+    webserver:
+      expose_config: "true"
 
-  env:
-    - name: AIRFLOW_HOME
-      value: /opt/airflow
+  extraEnv:
+    - name: AIRFLOW__API__AUTH_BACKENDS
+      value: airflow.api.auth.backend.basic_auth
 
   envFrom:
     - secretRef:
