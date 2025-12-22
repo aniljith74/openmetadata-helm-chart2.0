@@ -30,6 +30,12 @@ airflow:
 
 
 webserver:
+  service:
+    type: LoadBalancer
+    ports:
+      - name: airflow-ui
+        port: 8080
+        targetPort: 8080
   startupProbe: {}
 
   livenessProbe:
