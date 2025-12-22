@@ -73,5 +73,13 @@ jobs:
             --version 1.11.0 \
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
-
-
+          kubectl patch deployment airflow-webserver \
+            -n daap-dev \
+            --type=json \
+            -p='[
+              {
+                "op": "remove",
+                "path": "/spec/template/spec/containers/0/startupProbe"
+              }
+            ]'
+        

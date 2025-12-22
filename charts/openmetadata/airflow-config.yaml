@@ -36,14 +36,7 @@ webserver:
       - name: airflow-ui
         port: 8080
         targetPort: 8080
-  startupProbe:
-    httpGet:
-      path: /health
-      port: 8080
-    initialDelaySeconds: 180
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 30
+  startupProbe: {}
   livenessProbe:
     initialDelaySeconds: 300
     periodSeconds: 30
