@@ -7,15 +7,9 @@ images:
 
 airflow:
   config:
-    core:
-      load_examples: "false"
-
-    api:
-      auth_backends: >
-        airflow.api.auth.backend.basic_auth
-
-    webserver:
-      expose_config: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
 
   env:
     - name: AIRFLOW_HOME
