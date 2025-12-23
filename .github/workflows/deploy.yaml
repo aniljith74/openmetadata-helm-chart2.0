@@ -72,7 +72,8 @@ jobs:
             --namespace daap-dev \
             --version 1.11.0 \
             -f charts/openmetadata/airflow-config.yaml \
-            --timeout 15m
+            --timeout 15m \
+            --atomic
           kubectl patch deployment airflow-webserver \
             -n daap-dev \
             --type=json \

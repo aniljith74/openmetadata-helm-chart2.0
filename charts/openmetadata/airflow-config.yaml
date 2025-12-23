@@ -7,21 +7,22 @@ images:
 
 airflow:
   config:
-    core:
-      load_examples: "false"
-    webserver:
-      expose_config: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
 
   extraEnv:
     - name: AIRFLOW__API__AUTH_BACKENDS
       value: airflow.api.auth.backend.basic_auth
+
+  env:
+    - name: AIRFLOW_HOME
+      value: /opt/airflow
 
   envFrom:
     - secretRef:
         name: airflow-metadata
     - secretRef:
         name: airflow-fernet-key
-
 
 webserver:
   service:
