@@ -1,3 +1,6 @@
+migrateDatabaseJob:
+  enabled: false
+
 executor: LocalExecutor
 
 images:
