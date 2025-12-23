@@ -1,5 +1,7 @@
 migrateDatabaseJob:
   enabled: false
+createUserJob:
+  enabled: false
 
 executor: LocalExecutor
 
