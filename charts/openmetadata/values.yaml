@@ -48,7 +48,6 @@ openmetadata:
       verifySsl: "no-ssl"
       auth:
         enabled: true
-        provider: basic 
         username: admin
         password:
           secretRef: airflow-secrets

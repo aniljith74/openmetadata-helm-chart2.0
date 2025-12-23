@@ -18,6 +18,9 @@ airflow:
     - name: AIRFLOW_HOME
       value: /opt/airflow
 
+  extraPipPackages:
+    - openmetadata-ingestion==1.3.3
+
   envFrom:
     - secretRef:
         name: airflow-metadata
