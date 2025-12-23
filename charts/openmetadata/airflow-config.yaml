@@ -1,7 +1,7 @@
-migrateDatabaseJob:
-  enabled: false
-users:
-  create: false
+# migrateDatabaseJob:
+#   enabled: false
+# users:
+#   create: false
 
 executor: LocalExecutor
 
@@ -23,8 +23,8 @@ airflow:
     - name: AIRFLOW_HOME
       value: /opt/airflow
 
-  extraPipPackages:
-    - openmetadata-ingestion==1.11.2
+  # extraPipPackages:
+  #   - openmetadata-ingestion==1.11.2
 
   envFrom:
     - secretRef:
