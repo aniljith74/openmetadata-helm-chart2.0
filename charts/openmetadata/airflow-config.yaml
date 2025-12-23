@@ -3,7 +3,7 @@ executor: LocalExecutor
 images:
   airflow:
     repository: apache/airflow
-    tag: 2.3.4
+    tag: 2.5.3
 
 airflow:
   config:
