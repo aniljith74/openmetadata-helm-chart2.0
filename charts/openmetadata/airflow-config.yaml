@@ -32,6 +32,9 @@ airflow:
 
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
       value: "true"
+    
+  extraPipPackages:
+    - openmetadata-ingestion[airflow]==1.11.2
 
   users:
     - username: admin
@@ -48,6 +51,16 @@ logs:
     storageClassName: azurefile-csi
 
 webserver:
-  livenessProbe: {}
-  readinessProbe: {}
+  livenessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 10
+
+  readinessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 10
+
 
