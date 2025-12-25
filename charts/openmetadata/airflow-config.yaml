@@ -36,5 +36,6 @@ airflow:
 logs:
   persistence:
     enabled: true
+    storageClassName: azurefile-csi
+    accessMode: ReadWriteMany
     size: 10Gi
-    storageClassName: managed-csi
