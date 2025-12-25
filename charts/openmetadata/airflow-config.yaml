@@ -48,13 +48,6 @@ logs:
     storageClassName: azurefile-csi
 
 webserver:
-  livenessProbe:
-    enabled: false
-  readinessProbe:
-    enabled: false
+  livenessProbe: {}
+  readinessProbe: {}
 
-scheduler:
-  replicas: 1
-
-triggerer:
-  enabled: true
