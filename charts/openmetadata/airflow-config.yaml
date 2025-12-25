@@ -1,15 +1,28 @@
-airflow:
-  image:
+# 🔹 Image (THIS is where version belongs)
+images:
+  airflow:
     repository: apache/airflow
-    tag: 2.7.3
+    tag: "2.7.3"
 
-  executor: LocalExecutor
+executor: LocalExecutor
 
+postgresql:
+  enabled: false
+
+externalDatabase:
+  type: postgres
+  host: postgres.daap-dev.svc.cluster.local
+  port: 5432
+  database: airflow
+  user: airflow
+  passwordSecret: airflow-metadata
+  passwordSecretKey: connection
+
+airflow:
   config:
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
     AIRFLOW__WEBSERVER__RBAC: "true"
-    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
 
   users:
     - username: admin
@@ -19,26 +32,7 @@ airflow:
       firstName: Admin
       lastName: User
 
-  postgresql:
-    enabled: false
-
-  data:
-    metadataConnection:
-      user: airflow
-      pass: airflow
-      protocol: postgresql
-      host: postgres.daap-dev.svc.cluster.local
-      port: 5432
-      db: airflow
-      sslmode: disable
-
-  logs:
-    persistence:
-      enabled: true
-      size: 10Gi
-
-  scheduler:
-    replicas: 1
-
-  webserver:
-    replicas: 1
+logs:
+  persistence:
+    enabled: true
+    size: 10Gi
