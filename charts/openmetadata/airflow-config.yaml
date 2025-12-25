@@ -51,6 +51,8 @@ logs:
     storageClassName: azurefile-csi
 
 webserver:
+  service:
+    type: LoadBalancer
   livenessProbe:
     initialDelaySeconds: 120
     periodSeconds: 30
