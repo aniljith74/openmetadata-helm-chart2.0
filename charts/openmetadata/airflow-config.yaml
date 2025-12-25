@@ -8,6 +8,7 @@ images:
 postgresql:
   enabled: false
 
+
 data:
   metadataConnection:
     protocol: postgresql
@@ -18,13 +19,20 @@ data:
     pass: airflow
     sslmode: disable
 
-config:
-  AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-  AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
-  AIRFLOW__WEBSERVER__RBAC: "true"
-  AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
-
 airflow:
+  config:
+    AIRFLOW__CORE__LOAD_EXAMPLES:
+      value: "false"
+
+    AIRFLOW__API__AUTH_BACKENDS:
+      value: "airflow.api.auth.backend.basic_auth"
+
+    AIRFLOW__WEBSERVER__RBAC:
+      value: "true"
+
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
+      value: "true"
+
   users:
     - username: admin
       password: admin
@@ -39,23 +47,14 @@ logs:
     size: 10Gi
     storageClassName: azurefile-csi
 
-
 webserver:
-  startupProbe:
-    enabled: true
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 30
-
   livenessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 20
-    timeoutSeconds: 5
-    failureThreshold: 5
-
+    enabled: false
   readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 5
+    enabled: false
+
+scheduler:
+  replicas: 1
+
+triggerer:
+  enabled: true
