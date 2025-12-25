@@ -18,13 +18,13 @@ data:
     pass: airflow
     sslmode: disable
 
-airflow:
-  config:
-    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-    AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
-    AIRFLOW__WEBSERVER__RBAC: "true"
-    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
+config:
+  AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+  AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+  AIRFLOW__WEBSERVER__RBAC: "true"
+  AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
 
+airflow:
   users:
     - username: admin
       password: admin
@@ -38,3 +38,24 @@ logs:
     enabled: true
     size: 10Gi
     storageClassName: azurefile-csi
+
+
+webserver:
+  startupProbe:
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 30
+
+  livenessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 20
+    timeoutSeconds: 5
+    failureThreshold: 5
+
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 5
