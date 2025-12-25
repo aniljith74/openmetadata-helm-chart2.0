@@ -68,18 +68,7 @@ jobs:
 
       - name: Deploy Airflow
         run: |
-          helm upgrade --install airflow apache-airflow/airflow \
+          helm install airflow apache-airflow/airflow \
             --namespace daap-dev \
-            --version 1.11.0 \
-            -f charts/openmetadata/airflow-config.yaml \
-            --timeout 15m 
-          kubectl patch deployment airflow-webserver \
-            -n daap-dev \
-            --type=json \
-            -p='[
-              {
-                "op": "remove",
-                "path": "/spec/template/spec/containers/0/startupProbe"
-              }
-            ]'
-        
+            --version 1.13.1 \
+            -f charts/openmetadata/airflow-config.yaml

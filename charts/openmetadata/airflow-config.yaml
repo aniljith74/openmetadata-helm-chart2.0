@@ -1,91 +1,44 @@
-# migrateDatabaseJob:
-#   enabled: false
-# users:
-#   create: false
-
-executor: LocalExecutor
-
-images:
-  airflow:
-    repository: apache/airflow
-    tag: 2.5.3
-
 airflow:
+  image:
+    repository: apache/airflow
+    tag: 2.7.3
+
+  executor: LocalExecutor
+
   config:
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+    AIRFLOW__WEBSERVER__RBAC: "true"
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
 
-  extraEnv:
-    - name: AIRFLOW__API__AUTH_BACKENDS
-      value: airflow.api.auth.backend.basic_auth
+  users:
+    - username: admin
+      password: admin
+      role: Admin
+      email: admin@example.com
+      firstName: Admin
+      lastName: User
 
-  env:
-    - name: AIRFLOW_HOME
-      value: /opt/airflow
+  postgresql:
+    enabled: false
 
-  # extraPipPackages:
-  #   - openmetadata-ingestion==1.11.2
+  data:
+    metadataConnection:
+      user: airflow
+      pass: airflow
+      protocol: postgresql
+      host: postgres.daap-dev.svc.cluster.local
+      port: 5432
+      db: airflow
+      sslmode: disable
 
-  envFrom:
-    - secretRef:
-        name: airflow-metadata
-    - secretRef:
-        name: airflow-fernet-key
+  logs:
+    persistence:
+      enabled: true
+      size: 10Gi
 
-webserver:
-  service:
-    type: LoadBalancer
-    ports:
-      - name: airflow-ui
-        port: 8080
-        targetPort: 8080
-  startupProbe: {}
-  livenessProbe:
-    initialDelaySeconds: 300
-    periodSeconds: 30
-    timeoutSeconds: 5
-    failureThreshold: 5
+  scheduler:
+    replicas: 1
 
-  readinessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 15
-    timeoutSeconds: 5
-
-scheduler:
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
-
-triggerer:
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
-
-dagProcessor:
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
-
-logs:
-  persistence:
-    enabled: true
-    existingClaim: airflow-logs
-
-postgresql:
-  enabled: false
-
-data:
-  metadataConnection:
-    protocol: postgresql
-    user: airflow
-    pass: airflow
-    host: postgres.daap-dev.svc.cluster.local
-    port: 5432
-    db: airflow
-    sslmode: disable
+  webserver:
+    replicas: 1
