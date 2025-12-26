@@ -2,12 +2,10 @@ FROM apache/airflow:2.7.3
 
 USER root
 
-
 RUN pip install --no-cache-dir apache-airflow==2.7.3
 
-# Install OpenMetadata ingestion
 RUN pip install --no-cache-dir "openmetadata-ingestion[airflow]==1.11.2"
 
-USER airflow
+RUN which airflow && airflow version
 
-RUN airflow version
+USER airflow
