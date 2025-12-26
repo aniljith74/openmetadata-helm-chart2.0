@@ -44,7 +44,7 @@ jobs:
           context: .
           file: Dockerfile-airflow
           push: true
-          tags: daappoc25.azurecr.io/airflow:2.2.5
+          tags: daappoc25.azurecr.io/airflow:2.2.5-python3.8
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -80,8 +80,6 @@ jobs:
             --namespace daap-dev \
             --version 1.7.0 \
             -f charts/openmetadata/airflow-config.yaml \
-            --reuse-values=false \
-            --force \
             --timeout 15m
           kubectl patch deployment airflow-webserver \
             -n daap-dev \
