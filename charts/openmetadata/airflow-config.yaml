@@ -21,6 +21,10 @@ data:
     sslmode: disable
 
 airflow:
+  configOverrides:
+    airflow.cfg: |
+      [api]
+      auth_backends = airflow.api.auth.backend.basic_auth
   config:
     AIRFLOW__CORE__LOAD_EXAMPLES:
       value: "false"
@@ -33,8 +37,6 @@ airflow:
 
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
       value: "true"
-    api:
-      auth_backends: airflow.api.auth.backend.basic_auth
   
   users:
     - username: admin

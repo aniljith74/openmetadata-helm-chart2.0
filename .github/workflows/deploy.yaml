@@ -81,9 +81,8 @@ jobs:
             --namespace daap-dev \
             --version 1.13.1 \
             -f charts/openmetadata/airflow-config.yaml \
-            --set airflow.config.api.auth_backends=airflow.api.auth.backend.basic_auth \
-            --set airflow.config.webserver.rbac=true \
-            --set airflow.config.webserver.expose_config=true \
+            --reuse-values=false \
+            --force \
             --timeout 15m
           kubectl patch deployment airflow-webserver \
             -n daap-dev \
