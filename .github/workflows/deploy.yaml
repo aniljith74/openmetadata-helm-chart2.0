@@ -75,7 +75,7 @@ jobs:
 
       - name: Deploy Airflow
         run: |
-          kubectl apply -f charts/openmetadata/airflow-logs-pvc.yaml
+          kubectl apply -f charts/openmetadata/airflow-pvc.yaml
           helm upgrade --install airflow \
             https://github.com/apache/airflow/releases/download/helm-chart%2F1.13.1/airflow-1.13.1.tgz \
             --namespace daap-dev \
