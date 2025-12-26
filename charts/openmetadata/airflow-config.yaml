@@ -5,6 +5,10 @@ images:
     repository: daappoc25.azurecr.io/airflow
     tag: latest
 
+  migrations:
+    repository: daappoc25.azurecr.io/airflow
+    tag: latest
+
 postgresql:
   enabled: false
 
@@ -44,8 +48,7 @@ airflow:
 logs:
   persistence:
     enabled: true
-    size: 10Gi
-    storageClassName: azurefile-csi
+    existingClaim: airflow-logs
 
 webserver:
   service:

@@ -81,6 +81,7 @@ jobs:
             --version 1.13.1 \
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
+          kubectl apply -f charts/openmetadata/airflow-logs-pvc.yaml
           kubectl patch deployment airflow-webserver \
             -n daap-dev \
             --type=json \
