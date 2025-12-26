@@ -2,12 +2,10 @@ FROM apache/airflow:2.7.3
 
 USER airflow
 
-
 RUN pip install --upgrade pip
 
-
 RUN pip install --no-cache-dir \
-  openmetadata-ingestion==1.10.4 \
+  openmetadata-ingestion==1.10.2.0 \
   --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.7.3/constraints-3.10.txt"
 
 RUN airflow version
