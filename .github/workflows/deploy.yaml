@@ -44,7 +44,7 @@ jobs:
           context: .
           file: Dockerfile-airflow
           push: true
-          tags: daappoc25.azurecr.io/airflow:2.7.3
+          tags: daappoc25.azurecr.io/airflow:2.2.5
 
       - name: Install Helm
         uses: azure/setup-helm@v3
