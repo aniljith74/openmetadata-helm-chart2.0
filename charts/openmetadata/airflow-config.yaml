@@ -38,9 +38,11 @@ airflow:
     securityContext:
       runAsUser: 50000
       runAsGroup: 0
-    env:
-      - name: PATH
-        value: "/home/airflow/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        /home/airflow/.local/bin/airflow db check-migrations
 
 
   users:
