@@ -38,13 +38,9 @@ airflow:
     securityContext:
       runAsUser: 50000
       runAsGroup: 0
-    command:
-      - /bin/bash
-      - -c
-      - |
+    args:
+      - >
         /home/airflow/.local/bin/airflow db check-migrations
-
-
   users:
     - username: admin
       password: admin
