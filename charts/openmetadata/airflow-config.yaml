@@ -34,13 +34,6 @@ airflow:
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
       value: "true"
   
-  dbMigrations:
-    securityContext:
-      runAsUser: 50000
-      runAsGroup: 0
-    args:
-      - >
-        /home/airflow/.local/bin/airflow db check-migrations
   users:
     - username: admin
       password: admin
