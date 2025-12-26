@@ -54,10 +54,6 @@ openmetadata:
           secretRef: airflow-secrets
           secretKey: openmetadata-airflow-password
 
-      apiVersion: "v1"
-
-
-
     authorizer:
       enabled: true
       className: "org.openmetadata.service.security.DefaultAuthorizer"
