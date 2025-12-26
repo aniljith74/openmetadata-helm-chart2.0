@@ -1,11 +1,7 @@
 FROM apache/airflow:2.7.3
 
 USER root
-
-RUN pip install --no-cache-dir apache-airflow==2.7.3
-
 RUN pip install --no-cache-dir "openmetadata-ingestion[airflow]==1.11.2"
-
-RUN which airflow && airflow version
-
 USER airflow
+
+RUN airflow version

@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: Dockerfile-openmetadata
+          file: Dockerfile-airflow
           push: true
           tags: daappoc25.azurecr.io/airflow:2.7.3
 
