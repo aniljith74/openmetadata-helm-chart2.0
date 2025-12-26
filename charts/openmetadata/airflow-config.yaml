@@ -2,9 +2,9 @@ executor: LocalExecutor
 
 images:
   airflow:
-    repository: daappoc25.azurecr.io/airflow
-    tag: 2.9.2
-    pullPolicy: Always
+    repository: apache/airflow
+    tag: 2.9.2  
+    pullPolicy: IfNotPresent
 
 postgresql:
   enabled: false
