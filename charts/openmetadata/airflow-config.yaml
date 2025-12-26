@@ -2,8 +2,8 @@ executor: LocalExecutor
 
 images:
   airflow:
-    repository: apache/airflow
-    tag: 2.7.3
+    repository: daappoc25.azurecr.io/airflow
+    tag: latest
 
 postgresql:
   enabled: false
@@ -18,9 +18,6 @@ data:
     user: airflow
     pass: airflow
     sslmode: disable
-
-extraPipPackages:
-    - openmetadata-ingestion[airflow]==1.11.2
 
 airflow:
   config:
