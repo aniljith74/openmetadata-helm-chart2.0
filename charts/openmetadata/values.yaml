@@ -1,5 +1,4 @@
-replicaCount: 1
-ingestion:
+openmetadata-ingestion:
   enabled: true
 
   image:
@@ -7,13 +6,12 @@ ingestion:
     tag: 1.11.2
     pullPolicy: IfNotPresent
 
-  resources: {}
-
-  extraEnvVars:
+  env:
     - name: OPENMETADATA_SERVER_HOST
       value: openmetadata
     - name: OPENMETADATA_SERVER_PORT
       value: "8585"
+replicaCount: 1
 
 openmetadata:
   config:
