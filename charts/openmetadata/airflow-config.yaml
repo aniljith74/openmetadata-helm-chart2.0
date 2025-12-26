@@ -28,6 +28,9 @@ airflow:
     AIRFLOW__API__AUTH_BACKENDS:
       value: "airflow.api.auth.backend.basic_auth"
 
+    AIRFLOW__WEBSERVER__AUTHENTICATE:
+      value: "False"
+
     AIRFLOW__WEBSERVER__RBAC:
       value: "true"
 
