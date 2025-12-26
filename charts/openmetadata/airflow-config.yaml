@@ -19,6 +19,9 @@ data:
     pass: airflow
     sslmode: disable
 
+extraPipPackages:
+    - openmetadata-ingestion[airflow]==1.11.2
+
 airflow:
   config:
     AIRFLOW__CORE__LOAD_EXAMPLES:
@@ -32,9 +35,6 @@ airflow:
 
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
       value: "true"
-    
-  extraPipPackages:
-    - openmetadata-ingestion[airflow]==1.11.2
 
   users:
     - username: admin
