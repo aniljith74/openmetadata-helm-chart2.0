@@ -5,10 +5,6 @@ images:
     repository: daappoc25.azurecr.io/airflow
     tag: latest
 
-  migrations:
-    repository: daappoc25.azurecr.io/airflow
-    tag: latest
-
 postgresql:
   enabled: false
 
