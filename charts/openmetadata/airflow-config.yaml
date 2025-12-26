@@ -3,7 +3,7 @@ executor: LocalExecutor
 images:
   airflow:
     repository: daappoc25.azurecr.io/airflow
-    tag: latest
+    tag: 2.7.3-om-1.11.2
 
 postgresql:
   enabled: false
