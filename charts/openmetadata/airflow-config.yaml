@@ -3,7 +3,7 @@ executor: LocalExecutor
 images:
   airflow:
     repository: daappoc25.azurecr.io/airflow
-    tag: 2.2.5-python3.8
+    tag: 2.9.2
     pullPolicy: Always
 
 postgresql:

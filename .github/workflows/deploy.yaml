@@ -38,13 +38,13 @@ jobs:
           push: true
           tags: daappoc25.azurecr.io/openmetadata:latest
 
-      - name: Build & Push Airflow Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: Dockerfile-airflow
-          push: true
-          tags: daappoc25.azurecr.io/airflow:2.2.5-python3.8
+      # - name: Build & Push Airflow Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     file: Dockerfile-airflow
+      #     push: true
+      #     tags: daappoc25.azurecr.io/airflow:2.9.2
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -55,7 +55,7 @@ jobs:
         run: |
           helm repo add open-metadata https://helm.open-metadata.org
           helm repo add opensearch https://opensearch-project.github.io/helm-charts
-          helm repo add apache-airflow https://airflow.apache.org
+          # helm repo add apache-airflow https://airflow.apache.org
           helm repo update
                             
 
@@ -73,20 +73,19 @@ jobs:
             -f charts/openmetadata/values.yaml \
             --timeout 15m
 
-      - name: Deploy Airflow
-        run: |
-          kubectl apply -f charts/openmetadata/airflow-pvc.yaml
-          helm upgrade --install airflow apache-airflow/airflow \
-            --namespace daap-dev \
-            --version 1.7.0 \
-            -f charts/openmetadata/airflow-config.yaml \
-            --timeout 15m
-          kubectl patch deployment airflow-webserver \
-            -n daap-dev \
-            --type=json \
-            -p='[
-              {
-                "op": "remove",
-                "path": "/spec/template/spec/containers/0/startupProbe"
-              }
-            ]'
+      # - name: Deploy Airflow
+      #   run: |
+      #     kubectl apply -f charts/openmetadata/airflow-pvc.yaml
+      #     helm upgrade --install airflow apache-airflow/airflow \
+      #       --namespace daap-dev \
+      #       -f charts/openmetadata/airflow-config.yaml \
+      #       --timeout 15m
+      #     kubectl patch deployment airflow-webserver \
+      #       -n daap-dev \
+      #       --type=json \
+      #       -p='[
+      #         {
+      #           "op": "remove",
+      #           "path": "/spec/template/spec/containers/0/startupProbe"
+      #         }
+      #       ]'
