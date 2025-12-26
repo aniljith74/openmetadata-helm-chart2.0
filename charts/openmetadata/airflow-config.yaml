@@ -4,6 +4,7 @@ images:
   airflow:
     repository: daappoc25.azurecr.io/airflow
     tag: 2.7.3
+    pullPolicy: Always
 
 postgresql:
   enabled: false
@@ -32,6 +33,11 @@ airflow:
 
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
       value: "true"
+  
+  dbMigrations:
+    securityContext:
+      runAsUser: 50000
+      runAsGroup: 0
 
   users:
     - username: admin
