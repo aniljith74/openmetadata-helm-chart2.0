@@ -1,16 +1,3 @@
-openmetadata-ingestion:
-  enabled: true
-
-  image:
-    repository: openmetadata/ingestion
-    tag: 1.11.2
-    pullPolicy: IfNotPresent
-
-  env:
-    - name: OPENMETADATA_SERVER_HOST
-      value: openmetadata
-    - name: OPENMETADATA_SERVER_PORT
-      value: "8585"
 replicaCount: 1
 
 openmetadata:
@@ -117,3 +104,18 @@ resources: {}
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+
+openmetadata-ingestion:
+  enabled: true
+
+  image:
+    repository: openmetadata/ingestion
+    tag: 1.11.4
+    pullPolicy: IfNotPresent
+
+  env:
+    - name: OPENMETADATA_SERVER_HOST
+      value: openmetadata
+    - name: OPENMETADATA_SERVER_PORT
+      value: "8585"
