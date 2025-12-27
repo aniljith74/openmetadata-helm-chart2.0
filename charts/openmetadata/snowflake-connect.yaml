@@ -1,6 +1,6 @@
 source:
   type: snowflake
-  serviceName: Snowflake-Daap  
+  serviceName: Snowflake-Daap
 
   serviceConnection:
     config:
@@ -11,22 +11,23 @@ source:
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
 
+      databaseFilterPattern:
+        includes:
+          - ^DAAP_DB$
+
   sourceConfig:
     config:
       type: DatabaseMetadata
       includeTables: true
       includeViews: true
-      databaseFilterPattern:
-        includes:
-          - ^RETAIL_GOLD$
-
-sink:
-  type: metadata-rest
-  config:
-    apiEndpoint: http://openmetadata.daap-dev.svc.cluster.local:8585/api
-    authProvider: openmetadata
-    securityConfig:
-      jwtToken: ${OPENMETADATA_JWT_TOKEN}
+      includeTags: true
+      includeOwners: true
 
 workflowConfig:
   loggerLevel: INFO
+
+  openMetadataServerConfig:
+    hostPort: http://openmetadata.daap-dev.svc.cluster.local:8585/api
+    authProvider: openmetadata
+    securityConfig:
+      jwtToken: ${OPENMETADATA_JWT_TOKEN}
