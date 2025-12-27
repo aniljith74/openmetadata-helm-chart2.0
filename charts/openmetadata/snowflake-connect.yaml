@@ -10,10 +10,11 @@ source:
       account: A6050728655071-TSWORKZ_PARTNER
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
+      database: RETAIL_GOLD 
 
       databaseFilterPattern:
         includes:
-          - ^DAAP_DB$
+          - ^RETAIL_GOLD$
 
   sourceConfig:
     config:
