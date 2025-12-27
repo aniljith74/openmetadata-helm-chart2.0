@@ -17,7 +17,7 @@ spec:
               args:
                 - ingest
                 - -c
-                - /configs/snowflake.yaml
+                - /configs/snowflake-connect.yaml
               env:
                 - name: SNOWFLAKE_PASSWORD
                   valueFrom:
