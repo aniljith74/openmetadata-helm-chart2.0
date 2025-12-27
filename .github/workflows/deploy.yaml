@@ -74,7 +74,7 @@ jobs:
             --timeout 15m
           kubectl create configmap snowflake-ingestion-config \
             -n daap-dev \
-            -f charts/openmetadata/snowflake.yaml
+            --from-file=snowflake-connect.yaml
           kubectl apply -f charts/openmetadata/snowflake-ingestion-job.yaml
 
 
