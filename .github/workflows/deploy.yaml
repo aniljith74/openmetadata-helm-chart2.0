@@ -68,12 +68,15 @@ jobs:
 
       - name: Deploy OpenMetadata
         run: |
-          helm show chart open-metadata/openmetadata
-          helm show values open-metadata/openmetadata | grep -i ingestion
           helm upgrade --install openmetadata open-metadata/openmetadata \
             --namespace daap-dev \
             -f charts/openmetadata/values.yaml \
             --timeout 15m
+          kubectl create configmap snowflake-ingestion-config \
+            -n daap-dev \
+            -f charts/openmetadata/snowflake.yaml
+          kubectl apply -f charts/openmetadata/snowflake-ingestion-job.yaml
+
 
       # - name: Deploy Airflow
       #   run: |

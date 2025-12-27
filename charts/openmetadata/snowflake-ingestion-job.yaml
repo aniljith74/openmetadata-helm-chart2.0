@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: snowflake-metadata-ingestion
+  namespace: daap-dev
+spec:
+  schedule: "0 3 * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: ingestion
+              image: openmetadata/ingestion:1.11.4
+              args:
+                - ingest
+                - -c
+                - /configs/snowflake.yaml
+              env:
+                - name: SNOWFLAKE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: snowflake-secrets
+                      key: password
+                - name: OPENMETADATA_JWT_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: openmetadata-bot
+                      key: jwt
+              volumeMounts:
+                - name: config
+                  mountPath: /configs
+          volumes:
+            - name: config
+              configMap:
+                name: snowflake-ingestion-config
+          restartPolicy: Never

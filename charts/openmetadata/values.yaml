@@ -2,8 +2,6 @@ replicaCount: 1
 
 openmetadata:
   config:
-    ingestion:
-      enabled: true
     logLevel: INFO
     clusterName: openmetadata
 
