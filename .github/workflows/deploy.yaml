@@ -83,7 +83,7 @@ jobs:
             --from-file=charts/openmetadata/snowflake-auto-classification.yaml \
             --dry-run=client -o yaml | kubectl apply -f -
           kubectl apply -f charts/openmetadata/snowflake-profiler-job.yaml
-          kubectl apply -f charts/openmetadata/snowflake-auto-classification-job.yaml
+          # kubectl apply -f charts/openmetadata/snowflake-auto-classification-job.yaml
 
 
 
