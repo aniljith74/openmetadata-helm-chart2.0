@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: snowflake-profiler-and-classification
+  namespace: daap-dev
+spec:
+  schedule: "0 4 * * *"   
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: ingestion
+              image: openmetadata/ingestion:1.11.4
+              command: ["/bin/bash", "-c"]
+              args:
+                - |
+                  set -e
+                  echo "===== Running Snowflake Profiler ====="
+                  metadata ingest -c /configs/snowflake-profiler.yaml
+
+                  echo "===== Running Snowflake Auto Classification ====="
+                  metadata ingest -c /configs/snowflake-auto-classification.yaml
+
+                  echo "===== Ingestion completed successfully ====="
+              env:
+                - name: SNOWFLAKE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: snowflake-secrets
+                      key: password
+                - name: OPENMETADATA_JWT_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: openmetadata-bot
+                      key: jwt
+              volumeMounts:
+                - name: config
+                  mountPath: /configs
+
+          volumes:
+            - name: config
+              configMap:
+                name: snowflake-profiler-classification-config
+
+          restartPolicy: Never

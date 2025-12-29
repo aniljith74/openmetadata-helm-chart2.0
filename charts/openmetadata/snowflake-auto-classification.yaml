@@ -13,9 +13,10 @@ source:
 
 sourceConfig:
   config:
-    type: Profiler
-    generateSampleData: false
-    profileSample: 100
+    type: AutoClassification
+    confidence: 80
+    enableAutoClassification: true
+    includePII: true
 
     databaseFilterPattern:
       includes:

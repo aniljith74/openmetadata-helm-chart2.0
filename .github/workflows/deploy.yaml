@@ -72,10 +72,17 @@ jobs:
             --namespace daap-dev \
             -f charts/openmetadata/values.yaml \
             --timeout 15m
-          kubectl create configmap snowflake-ingestion-config \
+          # kubectl create configmap snowflake-ingestion-config \
+          #   -n daap-dev \
+          #   --from-file=charts/openmetadata/snowflake-connect.yaml
+          # kubectl apply -f charts/openmetadata/snowflake-ingestion-job.yaml
+          kubectl create configmap snowflake-profiler-classification-config \
             -n daap-dev \
-            --from-file=charts/openmetadata/snowflake-connect.yaml
-          kubectl apply -f charts/openmetadata/snowflake-ingestion-job.yaml
+            --from-file=charts/openmetadata/snowflake-profiler.yaml \
+            --from-file=charts/openmetadata/snowflake-auto-classification.yaml \
+            --dry-run=client -o yaml | kubectl apply -f -
+          kubectl apply -f charts/openmetadata/snowflake-profiler-and-classification-job.yaml
+
 
 
       # - name: Deploy Airflow
