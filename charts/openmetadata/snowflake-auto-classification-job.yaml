@@ -37,6 +37,6 @@ spec:
           volumes:
             - name: config
               configMap:
-                name: snowflake-classification-config
+                name: snowflake-profiler-classification-config
 
           restartPolicy: Never
