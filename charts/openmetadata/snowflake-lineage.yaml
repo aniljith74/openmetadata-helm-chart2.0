@@ -5,20 +5,18 @@ source:
   serviceConnection:
     config:
       type: Snowflake
-      username: <user>
+      username: ANILJITH.SATHYANATHAN@TSWORKS.IO
       password: ${SNOWFLAKE_PASSWORD}
-      account: <account>
-      warehouse: <warehouse>
-      role: <role>
-      database: <ONE_DATABASE>
+      account: A6050728655071-TSWORKZ_PARTNER
+      warehouse: COMPUTE_WH
+      role: DAAP_DEVELOPER_ROLE
 
       accountUsageSchema: SNOWFLAKE.ACCOUNT_USAGE
       queryTag: openmetadata
 
   sourceConfig:
     config:
-      type: DatabaseQueryUsage
-      queryLogDuration: 1
+      type: DatabaseLineage
 
 sink:
   type: metadata-rest
