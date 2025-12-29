@@ -11,19 +11,17 @@ source:
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
 
-sourceConfig:
+processor:
+  type: profiler
   config:
-    type: Profiler
-    generateSampleData: false
-    profileSample: 100
-
-    databaseFilterPattern:
-      includes:
-        - ^RETAIL_GOLD$
-        - ^RETAIL_SILVER$
-        - ^RETAIL_ODS$
-        - ^RETAIL_RAW$
-        - ^ODOO_ODS$
+    tableConfig:
+      databaseFilterPattern:
+        includes:
+          - ^RETAIL_GOLD$
+          - ^RETAIL_SILVER$
+          - ^RETAIL_ODS$
+          - ^RETAIL_RAW$
+          - ^ODOO_ODS$
 
 sink:
   type: metadata-rest

@@ -1,10 +1,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: snowflake-profiler-and-classification
+  name: snowflake-auto-classification
   namespace: daap-dev
 spec:
-  schedule: "0 4 * * *"   
+  schedule: "0 5 * * 0"   
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
 
@@ -13,19 +13,12 @@ spec:
       template:
         spec:
           containers:
-            - name: ingestion
+            - name: classification
               image: openmetadata/ingestion:1.11.4
-              command: ["/bin/bash", "-c"]
               args:
-                - |
-                  set -e
-                  echo "===== Running Snowflake Profiler ====="
-                  metadata ingest -c /configs/snowflake-profiler.yaml
-
-                  echo "===== Running Snowflake Auto Classification ====="
-                  metadata ingest -c /configs/snowflake-auto-classification.yaml
-
-                  echo "===== Ingestion completed successfully ====="
+                - ingest
+                - -c
+                - /configs/snowflake-auto-classification.yaml
               env:
                 - name: SNOWFLAKE_PASSWORD
                   valueFrom:
@@ -44,6 +37,6 @@ spec:
           volumes:
             - name: config
               configMap:
-                name: snowflake-profiler-classification-config
+                name: snowflake-classification-config
 
           restartPolicy: Never

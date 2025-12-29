@@ -11,20 +11,19 @@ source:
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
 
-sourceConfig:
+processor:
+  type: auto-classification
   config:
-    type: AutoClassification
-    confidence: 80
-    enableAutoClassification: true
-    includePII: true
-
-    databaseFilterPattern:
-      includes:
-        - ^RETAIL_GOLD$
-        - ^RETAIL_SILVER$
-        - ^RETAIL_ODS$
-        - ^RETAIL_RAW$
-        - ^ODOO_ODS$
+    confidenceThreshold: 0.8
+    sampleSize: 50
+    tableConfig:
+      databaseFilterPattern:
+        includes:
+          - ^RETAIL_GOLD$
+          - ^RETAIL_SILVER$
+          - ^RETAIL_ODS$
+          - ^RETAIL_RAW$
+          - ^ODOO_ODS$
 
 sink:
   type: metadata-rest
