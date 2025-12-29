@@ -16,12 +16,10 @@ source:
 
   sourceConfig:
     config:
-      type: DatabaseMetadata
+      type: DatabaseQueryUsage
 
-      includeTables: true
-      includeViews: true
-
-      includeLineage: true
+      enableLineage: true
+      queryLogDuration: 1  
 
       databaseFilterPattern:
         includes:
