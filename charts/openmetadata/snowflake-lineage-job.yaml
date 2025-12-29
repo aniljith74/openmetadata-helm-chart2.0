@@ -1,36 +1,41 @@
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
-  name: snowflake-lineage-job
+  name: snowflake-lineage-cron
   namespace: daap-dev
 spec:
-  backoffLimit: 0
-  template:
+  schedule: "0 2 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
     spec:
-      restartPolicy: Never
-      containers:
-        - name: lineage
-          image: openmetadata/ingestion:1.11.4
-          imagePullPolicy: IfNotPresent
-          args:
-            - ingest
-            - -c
-            - /config/snowflake-lineage.yaml
-          env:
-            - name: SNOWFLAKE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: snowflake-secrets
-                  key: password
-            - name: OPENMETADATA_JWT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: openmetadata-secrets
-                  key: jwtToken
-          volumeMounts:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: lineage
+              image: openmetadata/ingestion:1.11.4
+              imagePullPolicy: IfNotPresent
+              args:
+                - ingest
+                - -c
+                - /config/snowflake-lineage.yaml
+              env:
+                - name: SNOWFLAKE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: snowflake-secrets
+                      key: password
+                - name: OPENMETADATA_JWT_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: openmetadata-secrets
+                      key: jwtToken
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+          volumes:
             - name: config
-              mountPath: /config
-      volumes:
-        - name: config
-          configMap:
-            name: snowflake-lineage-config
+              configMap:
+                name: snowflake-lineage-config
