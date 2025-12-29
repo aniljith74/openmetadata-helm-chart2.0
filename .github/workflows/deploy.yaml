@@ -79,7 +79,7 @@ jobs:
           kubectl apply -f charts/openmetadata/snowflake-ingestion-job.yaml
           kubectl create configmap snowflake-lineage-config \
             -n daap-dev \
-            --from-file=snowflake-lineage.yaml \
+            --from-file=charts/openmetadata/snowflake-lineage.yaml \
             --dry-run=client -o yaml | kubectl apply -f -
           kubectl apply -f charts/openmetadata/snowflake-lineage-job.yaml
 
