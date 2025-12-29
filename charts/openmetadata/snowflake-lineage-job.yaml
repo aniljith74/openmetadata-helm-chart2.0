@@ -30,7 +30,7 @@ spec:
                 - name: OPENMETADATA_JWT_TOKEN
                   valueFrom:
                     secretKeyRef:
-                      name: openmetadata-secrets
+                      name: openmetadata-bot
                       key: jwtToken
               volumeMounts:
                 - name: config
