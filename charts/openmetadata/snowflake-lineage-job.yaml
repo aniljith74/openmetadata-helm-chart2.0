@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: snowflake-lineage-job
+  namespace: daap-dev
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: lineage
+          image: openmetadata/ingestion:1.11.4
+          imagePullPolicy: IfNotPresent
+          args:
+            - ingest
+            - -c
+            - /config/snowflake-lineage.yaml
+          env:
+            - name: SNOWFLAKE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: snowflake-secrets
+                  key: password
+            - name: OPENMETADATA_JWT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: openmetadata-secrets
+                  key: jwtToken
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: snowflake-lineage-config
