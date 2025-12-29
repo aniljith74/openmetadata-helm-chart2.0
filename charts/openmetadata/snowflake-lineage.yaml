@@ -1,6 +1,6 @@
 source:
   type: snowflake
-  serviceName: Snowflake-Daap   
+  serviceName: Snowflake-Daap
 
   serviceConnection:
     config:
@@ -11,13 +11,17 @@ source:
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
 
+      accountUsageSchema: SNOWFLAKE.ACCOUNT_USAGE
+      queryTag: openmetadata
+
   sourceConfig:
     config:
-      type: DatabaseLineage
+      type: DatabaseMetadata
 
-      lineageConfig:
-        queryParsing:
-          enabled: true
+      includeTables: true
+      includeViews: true
+
+      includeLineage: true
 
       databaseFilterPattern:
         includes:
