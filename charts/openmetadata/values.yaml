@@ -89,7 +89,7 @@ openmetadata:
 
 image:
   repository: daappoc25.azurecr.io/openmetadata
-  tag: latest
+  tag: 1.11.3
   pullPolicy: IfNotPresent
 
 fullnameOverride: openmetadata

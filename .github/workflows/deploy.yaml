@@ -36,7 +36,7 @@ jobs:
           context: .
           file: Dockerfile-openmetadata
           push: true
-          tags: daappoc25.azurecr.io/openmetadata:latest
+          tags: daappoc25.azurecr.io/openmetadata:1.11.3
 
       # - name: Build & Push Airflow Image
       #   uses: docker/build-push-action@v4
