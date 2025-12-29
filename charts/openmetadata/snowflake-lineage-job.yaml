@@ -16,6 +16,7 @@ spec:
           containers:
             - name: lineage
               image: openmetadata/ingestion:1.11.4
+              command: ["metadata"]
               imagePullPolicy: IfNotPresent
               args:
                 - ingest
