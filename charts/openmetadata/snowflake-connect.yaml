@@ -10,7 +10,7 @@ source:
       account: A6050728655071-TSWORKZ_PARTNER
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
-      database: RETAIL_GOLD   
+      database: RETAIL_GOLD
 
   sourceConfig:
     config:
@@ -20,9 +20,13 @@ source:
       includeTags: true
       includeOwners: true
 
-      databaseFilterPattern:   
+      databaseFilterPattern:
         includes:
           - ^RETAIL_GOLD$
+
+sink:
+  type: metadata-rest
+  config: {}
 
 workflowConfig:
   loggerLevel: INFO
