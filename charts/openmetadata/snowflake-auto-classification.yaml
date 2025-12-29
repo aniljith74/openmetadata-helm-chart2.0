@@ -10,13 +10,15 @@ source:
       account: A6050728655071-TSWORKZ_PARTNER
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
+      database: RETAIL_GOLD
 
-processor:
-  type: auto-classification
-  config:
-    confidenceThreshold: 0.8
-    sampleSize: 50
-    tableConfig:
+  sourceConfig:
+    config:
+      type: AutoClassification
+      confidence: 80
+      storeSampleData: true
+      enableAutoClassification: true
+
       databaseFilterPattern:
         includes:
           - ^RETAIL_GOLD$
@@ -24,6 +26,14 @@ processor:
           - ^RETAIL_ODS$
           - ^RETAIL_RAW$
           - ^ODOO_ODS$
+
+      schemaFilterPattern:
+        excludes:
+          - ^INFORMATION_SCHEMA$
+
+processor:
+  type: orm-profiler
+  config: {}
 
 sink:
   type: metadata-rest

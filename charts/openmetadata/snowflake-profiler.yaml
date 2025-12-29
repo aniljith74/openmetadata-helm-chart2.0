@@ -10,18 +10,18 @@ source:
       account: A6050728655071-TSWORKZ_PARTNER
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
+      database: RETAIL_GOLD
+
+  sourceConfig:
+    config:
+      type: Profiler
+      generateSampleData: true
+      processPiiSensitive: false
+      confidence: 0.85
 
 processor:
-  type: profiler
-  config:
-    tableConfig:
-      databaseFilterPattern:
-        includes:
-          - ^RETAIL_GOLD$
-          - ^RETAIL_SILVER$
-          - ^RETAIL_ODS$
-          - ^RETAIL_RAW$
-          - ^ODOO_ODS$
+  type: orm-profiler
+  config: {}
 
 sink:
   type: metadata-rest
