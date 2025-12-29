@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
             - name: classification
-              image: openmetadata/ingestion:1.11.3
+              image: openmetadata/ingestion:1.11.4
               command: ["metadata"]
               args:
                 - ingest
