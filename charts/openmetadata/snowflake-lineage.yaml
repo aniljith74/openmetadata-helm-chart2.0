@@ -5,11 +5,12 @@ source:
   serviceConnection:
     config:
       type: Snowflake
-      username: ANILJITH.SATHYANATHAN@TSWORKS.IO
+      username: <user>
       password: ${SNOWFLAKE_PASSWORD}
-      account: A6050728655071-TSWORKZ_PARTNER
-      warehouse: COMPUTE_WH
-      role: DAAP_DEVELOPER_ROLE
+      account: <account>
+      warehouse: <warehouse>
+      role: <role>
+      database: <ONE_DATABASE>
 
       accountUsageSchema: SNOWFLAKE.ACCOUNT_USAGE
       queryTag: openmetadata
@@ -17,25 +18,15 @@ source:
   sourceConfig:
     config:
       type: DatabaseQueryUsage
-
       queryLogDuration: 1
-
-      databaseFilterPattern:
-        includes:
-          - ^RETAIL_GOLD$
-          - ^RETAIL_SILVER$
-          - ^RETAIL_ODS$
-          - ^RETAIL_RAW$
-          - ^ODOO_ODS$
 
 sink:
   type: metadata-rest
   config: {}
 
 workflowConfig:
-  loggerLevel: INFO
   openMetadataServerConfig:
-    hostPort: http://openmetadata.daap-dev.svc.cluster.local:8585/api
+    hostPort: http://openmetadata:8585/api
     authProvider: openmetadata
     securityConfig:
       jwtToken: ${OPENMETADATA_JWT_TOKEN}
