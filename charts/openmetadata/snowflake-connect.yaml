@@ -10,7 +10,6 @@ source:
       account: A6050728655071-TSWORKZ_PARTNER
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
-      database: RETAIL_GOLD
 
   sourceConfig:
     config:
@@ -23,6 +22,10 @@ source:
       databaseFilterPattern:
         includes:
           - ^RETAIL_GOLD$
+          - ^RETAIL_SILVER$
+          - ^RETAIL_ODS$
+          - ^RETAIL_RAW$
+          - ^ODOO_ODS$
 
 sink:
   type: metadata-rest
