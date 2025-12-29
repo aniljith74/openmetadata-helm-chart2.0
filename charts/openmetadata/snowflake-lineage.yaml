@@ -18,8 +18,7 @@ source:
     config:
       type: DatabaseQueryUsage
 
-      enableLineage: true
-      queryLogDuration: 1  
+      queryLogDuration: 1
 
       databaseFilterPattern:
         includes:
@@ -35,7 +34,6 @@ sink:
 
 workflowConfig:
   loggerLevel: INFO
-
   openMetadataServerConfig:
     hostPort: http://openmetadata.daap-dev.svc.cluster.local:8585/api
     authProvider: openmetadata
