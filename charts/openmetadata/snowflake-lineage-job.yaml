@@ -31,7 +31,7 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: openmetadata-bot
-                      key: jwtToken
+                      key: jwt
               volumeMounts:
                 - name: config
                   mountPath: /config
