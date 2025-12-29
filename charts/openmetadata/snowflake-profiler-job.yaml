@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
             - name: profiler
-              image: openmetadata/ingestion:1.2.1
+              image: openmetadata/ingestion:1.11.4
               command: ["metadata"]
               args:
                 - ingest
