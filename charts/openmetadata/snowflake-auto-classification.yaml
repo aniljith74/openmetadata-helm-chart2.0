@@ -2,35 +2,10 @@ source:
   type: snowflake
   serviceName: Snowflake-Daap
 
-  serviceConnection:
-    config:
-      type: Snowflake
-      username: ANILJITH.SATHYANATHAN@TSWORKS.IO
-      password: ${SNOWFLAKE_PASSWORD}
-      account: A6050728655071-TSWORKZ_PARTNER
-      warehouse: COMPUTE_WH
-      role: DAAP_DEVELOPER_ROLE
-      database: RETAIL_GOLD
-
   sourceConfig:
     config:
       type: AutoClassification
-      confidence: 80
-      storeSampleData: true
-      enableAutoClassification: true
-
-      databaseFilterPattern:
-        includes:
-          - ^RETAIL_GOLD$
-          - ^RETAIL_SILVER$
-          - ^RETAIL_ODS$
-          - ^RETAIL_RAW$
-          - ^ODOO_ODS$
-
-      schemaFilterPattern:
-        excludes:
-          - ^INFORMATION_SCHEMA$
-
+      
 processor:
   type: orm-profiler
   config: {}

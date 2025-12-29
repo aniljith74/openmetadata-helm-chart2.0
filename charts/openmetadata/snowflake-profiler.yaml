@@ -10,15 +10,11 @@ source:
       account: A6050728655071-TSWORKZ_PARTNER
       warehouse: COMPUTE_WH
       role: DAAP_DEVELOPER_ROLE
-      database: RETAIL_GOLD
 
   sourceConfig:
     config:
       type: Profiler
-      generateSampleData: true
-      processPiiSensitive: false
-      confidence: 0.85
-
+      
 processor:
   type: orm-profiler
   config: {}
@@ -29,6 +25,7 @@ sink:
 
 workflowConfig:
   loggerLevel: INFO
+
   openMetadataServerConfig:
     hostPort: http://openmetadata.daap-dev.svc.cluster.local:8585/api
     authProvider: openmetadata
