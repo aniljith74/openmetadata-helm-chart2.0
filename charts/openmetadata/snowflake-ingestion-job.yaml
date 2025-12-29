@@ -13,12 +13,12 @@ spec:
         spec:
           containers:
             - name: ingestion
-              image: openmetadata/ingestion:1.11.4
+              image: openmetadata/ingestion:1.11.3
               command: ["metadata"]
               args:
                 - ingest
                 - -c
-                - /configs/snowflake-connect.yaml
+                - /configs/snowflake-ingestion.yaml
               env:
                 - name: SNOWFLAKE_PASSWORD
                   valueFrom:

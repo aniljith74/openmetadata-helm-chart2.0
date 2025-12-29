@@ -1,1 +1,1 @@
-FROM openmetadata/server:1.11.2
+FROM openmetadata/server:1.11.3
