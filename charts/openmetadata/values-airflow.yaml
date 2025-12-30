@@ -1,0 +1,45 @@
+data:
+  metadataConnection:
+    protocol: postgresql
+    host: postgres.daap-dev.svc.cluster.local
+    port: 5432
+    db: airflow
+    user: airflow
+    pass: airflow
+    sslmode: disable
+airflow:
+  enabled: true
+
+
+  airflow:
+    executor: LocalExecutor
+
+    config:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
+
+      AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/airflow-dags/dags"
+
+    extraVolumeMounts:
+      - name: airflow-dags
+        mountPath: /airflow-dags/dags
+      - name: airflow-logs
+        mountPath: /airflow-logs
+
+    extraVolumes:
+      - name: airflow-dags
+        persistentVolumeClaim:
+          claimName: airflow-dags-pvc
+      - name: airflow-logs
+        persistentVolumeClaim:
+          claimName: airflow-logs-pvc
+
+  dags:
+    path: /airflow-dags/dags
+    persistence:
+      enabled: false
+
+  logs:
+    path: /airflow-logs
+    persistence:
+      enabled: false
