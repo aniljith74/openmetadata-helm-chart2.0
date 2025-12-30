@@ -6,7 +6,7 @@ airflow:
     image:
       repository: daappoc25.azurecr.io/ingestion
       tag: latest
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
 
     executor: LocalExecutor
     extraEnv: []
