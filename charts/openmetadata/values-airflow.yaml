@@ -8,6 +8,7 @@ airflow:
       pullPolicy: IfNotPresent
 
     config:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres.daap-dev.svc.cluster.local:5432/airflow
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
       AIRFLOW__WEBSERVER__RBAC: "True"
