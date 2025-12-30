@@ -20,11 +20,6 @@ airflow:
       enabled: true
       existingClaim: airflow-logs
 
-  externalDatabase:
-    type: postgres
-    host: postgres.daap-dev.svc.cluster.local
-    port: 5432
-    database: airflow
-    user: airflow
-    passwordSecret: airflow-postgres-secret
-    passwordSecretKey: password
+mysql:
+  enabled: true
+
