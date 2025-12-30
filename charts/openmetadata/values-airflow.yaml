@@ -43,7 +43,7 @@ airflow:
   dags:
     persistence:
       enabled: true
-      existingClaim: airflow-dags
+      existingClaim: openmetadata-dependencies-dags
 
 mysql:
   enabled: true
