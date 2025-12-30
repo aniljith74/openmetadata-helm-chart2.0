@@ -20,6 +20,11 @@ airflow:
       enabled: true
       existingClaim: airflow-logs
 
+  dags:
+    persistence:
+      enabled: true
+      existingClaim: airflow-dags
+
 mysql:
   enabled: true
 
