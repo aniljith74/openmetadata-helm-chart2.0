@@ -1,6 +1,15 @@
 airflow:
   enabled: true
 
+
+  logs:
+    persistence:
+      enabled: false
+
+  dags:
+    persistence:
+      enabled: false
+
   airflow:
     image:
       repository: daappoc25.azurecr.io/ingestion
@@ -8,7 +17,7 @@ airflow:
       pullPolicy: Always
 
     executor: LocalExecutor
-
+    extraEnv: []
 
     livenessProbe:
       httpGet:
@@ -30,9 +39,9 @@ airflow:
 
     config:
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
-      AIRFLOW__API__ENABLE_API_SERVER: "True"
       AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
       AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
+
 
     extraVolumes:
       - name: airflow-dags
