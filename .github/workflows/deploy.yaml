@@ -38,13 +38,13 @@ jobs:
           push: true
           tags: daappoc25.azurecr.io/openmetadata:1.11.3
 
-      # - name: Build & Push Airflow Image
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: .
-      #     file: Dockerfile-airflow
-      #     push: true
-      #     tags: daappoc25.azurecr.io/airflow:2.9.2
+      - name: Build & Push Ingestion Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile-ingestion
+          push: true
+          tags: daappoc25.azurecr.io/ingestion:latest
 
       - name: Install Helm
         uses: azure/setup-helm@v3

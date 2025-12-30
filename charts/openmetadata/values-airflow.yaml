@@ -4,11 +4,12 @@ airflow:
 
   airflow:
     image:
-      repository: docker.getcollate.io/openmetadata/ingestion
-      tag: 1.11.4
+      repository: daappoc25.azurecr.io/ingestion
+      tag: latest
       pullPolicy: IfNotPresent
 
     executor: LocalExecutor
+    extraEnv: []
 
     config:
       AIRFLOW__API__ENABLE_EXPERIMENTAL_API: "True"
