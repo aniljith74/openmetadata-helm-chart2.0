@@ -13,6 +13,11 @@ airflow:
       AIRFLOW__WEBSERVER__RBAC: "True"
       AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/airflow/dags"
 
+  logs:
+     persistence:
+       enabled: true
+       existingClaim: airflow-logs 
+
   externalDatabase:
     type: postgres
     host: postgres.daap-dev.svc.cluster.local
