@@ -1,9 +1,15 @@
 airflow:
   enabled: true
 
-
   airflow:
-    apiServer:
+    image:
+      repository: daappoc25.azurecr.io/ingestion
+      tag: latest
+      pullPolicy: Always
+
+    executor: LocalExecutor
+
+
     livenessProbe:
       httpGet:
         path: /api/v2/version
@@ -21,30 +27,26 @@ airflow:
       timeoutSeconds: 10
       periodSeconds: 15
       failureThreshold: 6
-    image:
-      repository: daappoc25.azurecr.io/ingestion
-      tag: latest
-      pullPolicy: Always
-
-    executor: LocalExecutor
-    extraEnv: []
 
     config:
-      AIRFLOW__API__ENABLE_EXPERIMENTAL_API: "True"
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__API__ENABLE_API_SERVER: "True"
       AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
       AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
 
-  logs:
-    persistence:
-      enabled: true
-      existingClaim: airflow-logs
+    extraVolumes:
+      - name: airflow-dags
+        persistentVolumeClaim:
+          claimName: openmetadata-dependencies-dags
+      - name: airflow-logs
+        persistentVolumeClaim:
+          claimName: airflow-logs
 
-  dags:
-    persistence:
-      enabled: true
-      existingClaim: openmetadata-dependencies-dags
+    extraVolumeMounts:
+      - name: airflow-dags
+        mountPath: /opt/airflow/dags
+      - name: airflow-logs
+        mountPath: /opt/airflow/logs
 
 mysql:
   enabled: true
-
