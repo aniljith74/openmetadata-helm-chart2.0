@@ -1,45 +1,39 @@
-data:
-  metadataConnection:
-    protocol: postgresql
-    host: postgres.daap-dev.svc.cluster.local
-    port: 5432
-    db: airflow
-    user: airflow
-    pass: airflow
-    sslmode: disable
 airflow:
   enabled: true
 
-
   airflow:
-    executor: LocalExecutor
+    image:
+      repository: openmetadata/ingestion
+      tag: 1.11.3
+      pullPolicy: IfNotPresent
 
     config:
-      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
-
-      AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/airflow-dags/dags"
-
-    extraVolumeMounts:
-      - name: airflow-dags
-        mountPath: /airflow-dags/dags
-      - name: airflow-logs
-        mountPath: /airflow-logs
-
-    extraVolumes:
-      - name: airflow-dags
-        persistentVolumeClaim:
-          claimName: airflow-dags-pvc
-      - name: airflow-logs
-        persistentVolumeClaim:
-          claimName: airflow-logs-pvc
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
+      AIRFLOW__WEBSERVER__RBAC: "True"
+      AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/airflow/dags"
 
   dags:
-    path: /airflow-dags/dags
+    path: /airflow/dags
     persistence:
       enabled: false
 
   logs:
-    path: /airflow-logs
+    path: /airflow/logs
     persistence:
       enabled: false
+
+  externalDatabase:
+    type: postgres
+    host: postgres.daap-dev.svc.cluster.local
+    port: 5432
+    database: airflow
+    user: airflow
+    passwordSecret: airflow-postgres-secret
+    passwordSecretKey: password
+
+opensearch:
+  enabled: false
+
+mysql:
+  enabled: false

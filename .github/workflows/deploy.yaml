@@ -71,8 +71,10 @@ jobs:
           helm upgrade --install openmetadata open-metadata/openmetadata \
             --namespace daap-dev \
             -f charts/openmetadata/values.yaml \
-             -f charts/openmetadata/values-airflow.yaml \
             --timeout 15m
+          helm upgrade --install openmetadata-dependencies openmetadata/openmetadata-dependencies \
+            --namespace daap-dev \
+            -f charts/openmetadata/values-airflow.yaml 
 
           # kubectl create configmap snowflake-ingestion-config \
           #   -n daap-dev \
