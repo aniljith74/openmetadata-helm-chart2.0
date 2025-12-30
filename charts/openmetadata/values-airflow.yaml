@@ -11,6 +11,7 @@ airflow:
     executor: LocalExecutor
 
     config:
+      AIRFLOW__API__ENABLE_EXPERIMENTAL_API: "True"
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
       AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
       AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
