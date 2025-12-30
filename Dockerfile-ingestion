@@ -3,6 +3,7 @@ FROM docker.getcollate.io/openmetadata/ingestion:1.11.4
 USER airflow
 
 RUN pip install --no-cache-dir \
-    apache-airflow-providers-fab==2.4.4
+    apache-airflow-providers-fab==2.4.4 \
+    sqlalchemy-utils==0.38.3
 
 USER airflow

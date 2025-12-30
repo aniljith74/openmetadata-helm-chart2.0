@@ -77,6 +77,15 @@ jobs:
           helm upgrade --install openmetadata-dependencies open-metadata/openmetadata-dependencies \
             --namespace daap-dev \
             -f charts/openmetadata/values-airflow.yaml 
+          kubectl patch deployment openmetadata-dependencies-api-server \
+            -n daap-dev \
+            --type=json \
+            -p='[
+              {
+                "op": "remove",
+                "path": "/spec/template/spec/containers/0/startupProbe"
+              }
+            ]'
 
           # kubectl create configmap snowflake-ingestion-config \
           #   -n daap-dev \

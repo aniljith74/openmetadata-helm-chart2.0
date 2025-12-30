@@ -3,6 +3,24 @@ airflow:
 
 
   airflow:
+    apiServer:
+    livenessProbe:
+      httpGet:
+        path: /api/v2/version
+        port: 8080
+      initialDelaySeconds: 120
+      timeoutSeconds: 10
+      periodSeconds: 30
+      failureThreshold: 10
+
+    readinessProbe:
+      httpGet:
+        path: /api/v2/version
+        port: 8080
+      initialDelaySeconds: 60
+      timeoutSeconds: 10
+      periodSeconds: 15
+      failureThreshold: 6
     image:
       repository: daappoc25.azurecr.io/ingestion
       tag: latest
