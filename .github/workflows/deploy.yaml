@@ -72,7 +72,7 @@ jobs:
             --namespace daap-dev \
             -f charts/openmetadata/values.yaml \
             --timeout 15m
-          helm upgrade --install openmetadata-dependencies openmetadata/openmetadata-dependencies \
+          helm upgrade --install openmetadata-dependencies open-metadata/openmetadata-dependencies \
             --namespace daap-dev \
             -f charts/openmetadata/values-airflow.yaml 
 
