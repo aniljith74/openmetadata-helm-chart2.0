@@ -1,7 +1,6 @@
 airflow:
   enabled: true
 
-
   logs:
     persistence:
       enabled: false
@@ -16,32 +15,51 @@ airflow:
       tag: latest
       pullPolicy: Always
 
+
     executor: LocalExecutor
+
     extraEnv: []
 
     livenessProbe:
-      httpGet:
-        path: /api/v2/version
-        port: 8080
-      initialDelaySeconds: 120
-      timeoutSeconds: 10
-      periodSeconds: 30
+      exec:
+        command:
+          - sh
+          - -c
+          - "airflow jobs check --job-type SchedulerJob --local"
+      initialDelaySeconds: 180
+      timeoutSeconds: 30
+      periodSeconds: 60
       failureThreshold: 10
 
     readinessProbe:
-      httpGet:
-        path: /api/v2/version
-        port: 8080
-      initialDelaySeconds: 60
-      timeoutSeconds: 10
-      periodSeconds: 15
+      exec:
+        command:
+          - sh
+          - -c
+          - "airflow jobs check --job-type SchedulerJob --local"
+      initialDelaySeconds: 120
+      timeoutSeconds: 30
+      periodSeconds: 30
       failureThreshold: 6
 
     config:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+
+      AIRFLOW__KUBERNETES__NAMESPACE: ""
+      AIRFLOW__KUBERNETES_EXECUTOR__POD_TEMPLATE_FILE: ""
+
       AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
       AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
 
+
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+      limits:
+        cpu: "1"
+        memory: "2Gi"
 
     extraVolumes:
       - name: airflow-dags
