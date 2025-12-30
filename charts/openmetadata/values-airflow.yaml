@@ -1,23 +1,24 @@
 airflow:
   enabled: true
 
+
   airflow:
     image:
-      repository: openmetadata/ingestion
-      tag: 1.11.3
+      repository: docker.getcollate.io/openmetadata/ingestion
+      tag: 1.11.4
       pullPolicy: IfNotPresent
 
+    executor: LocalExecutor
+
     config:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres.daap-dev.svc.cluster.local:5432/airflow
-      AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
-      AIRFLOW__WEBSERVER__RBAC: "True"
-      AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/airflow/dags"
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.session,airflow.api.auth.backend.basic_auth
+      AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
 
   logs:
-     persistence:
-       enabled: true
-       existingClaim: airflow-logs 
+    persistence:
+      enabled: true
+      existingClaim: airflow-logs
 
   externalDatabase:
     type: postgres
@@ -27,9 +28,3 @@ airflow:
     user: airflow
     passwordSecret: airflow-postgres-secret
     passwordSecretKey: password
-
-opensearch:
-  enabled: false
-
-mysql:
-  enabled: false
