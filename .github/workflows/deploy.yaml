@@ -77,7 +77,7 @@ jobs:
           helm install openmetadata-dependencies open-metadata/openmetadata-dependencies \
             --namespace daap-dev \
             -f charts/openmetadata/values-airflow.yaml \
-            -timeout 20m
+            --timeout 20m
           kubectl patch deployment openmetadata-dependencies-api-server \
             -n daap-dev \
             --type=json \
