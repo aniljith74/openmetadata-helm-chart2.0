@@ -13,6 +13,7 @@ airflow:
       enabled: false
 
   airflow:
+    extraPipPackages: []
     image:
       repository: daappoc25.azurecr.io/ingestion
       tag: latest
