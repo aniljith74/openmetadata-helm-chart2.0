@@ -2,6 +2,8 @@ airflow:
   enabled: true
 
   airflow:
+    persistence:
+      enabled: false
     image:
       repository: daappoc25.azurecr.io/ingestion
       tag: latest
