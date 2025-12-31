@@ -74,7 +74,7 @@ jobs:
             --timeout 15m
           kubectl apply -f charts/openmetadata/airflow-pvc.yaml
           kubectl apply -f charts/openmetadata/airflow-dag-pvc.yaml
-          helm upgraade --install openmetadata-dependencies open-metadata/openmetadata-dependencies \
+          helm upgrade --install openmetadata-dependencies open-metadata/openmetadata-dependencies \
             --namespace daap-dev \
             -f charts/openmetadata/values-airflow.yaml \
             --timeout 20m
