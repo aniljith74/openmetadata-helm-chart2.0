@@ -44,7 +44,7 @@ jobs:
           context: .
           file: Dockerfile-ingestion
           push: true
-          tags: daappoc25.azurecr.io/ingestion:latest
+          tags: daappoc25.azurecr.io/ingestion:1.11.4
 
       - name: Install Helm
         uses: azure/setup-helm@v3

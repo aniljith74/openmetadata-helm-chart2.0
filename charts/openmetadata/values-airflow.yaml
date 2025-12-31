@@ -1,6 +1,11 @@
 airflow:
   enabled: true
 
+
+  extraPipPackages: []
+  installAdditionalRequirements: false
+  additionalRequirements: []
+
   persistence:
     enabled: false
 
@@ -12,11 +17,18 @@ airflow:
     persistence:
       enabled: false
 
+
+  web:
+    auth:
+      enabled: false
+
+  auth:
+    enabled: false
+
   airflow:
-    extraPipPackages: []
     image:
       repository: daappoc25.azurecr.io/ingestion
-      tag: latest
+      tag: 1.11.4
       pullPolicy: Always
 
     executor: LocalExecutor
@@ -24,6 +36,7 @@ airflow:
     config:
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
       AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+      AIRFLOW__WEBSERVER__AUTHENTICATE: "False"
       AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
 
     apiServer:

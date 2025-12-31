@@ -4,6 +4,3 @@ USER airflow
 
 
 RUN pip install sqlalchemy-utils==0.38.3
-
-
-RUN pip install apache-airflow-providers-fab==2.4.4 --no-deps
