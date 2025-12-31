@@ -15,43 +15,13 @@ airflow:
       tag: latest
       pullPolicy: Always
 
-
     executor: LocalExecutor
-
-    extraEnv: []
-
-    livenessProbe:
-      exec:
-        command:
-          - sh
-          - -c
-          - "airflow jobs check --job-type SchedulerJob --local"
-      initialDelaySeconds: 180
-      timeoutSeconds: 30
-      periodSeconds: 60
-      failureThreshold: 10
-
-    readinessProbe:
-      exec:
-        command:
-          - sh
-          - -c
-          - "airflow jobs check --job-type SchedulerJob --local"
-      initialDelaySeconds: 120
-      timeoutSeconds: 30
-      periodSeconds: 30
-      failureThreshold: 6
 
     config:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
-
-      AIRFLOW__KUBERNETES__NAMESPACE: ""
-      AIRFLOW__KUBERNETES_EXECUTOR__POD_TEMPLATE_FILE: ""
-
       AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
       AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
-
 
     resources:
       requests:
@@ -74,6 +44,29 @@ airflow:
         mountPath: /opt/airflow/dags
       - name: airflow-logs
         mountPath: /opt/airflow/logs
+
+  apiServer:
+    livenessProbe:
+      exec:
+        command:
+          - sh
+          - -c
+          - "airflow db check"
+      initialDelaySeconds: 180
+      timeoutSeconds: 30
+      periodSeconds: 60
+      failureThreshold: 10
+
+    readinessProbe:
+      exec:
+        command:
+          - sh
+          - -c
+          - "airflow db check"
+      initialDelaySeconds: 120
+      timeoutSeconds: 30
+      periodSeconds: 30
+      failureThreshold: 6
 
 mysql:
   enabled: true
