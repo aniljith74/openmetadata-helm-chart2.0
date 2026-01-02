@@ -44,7 +44,7 @@ jobs:
           context: .
           file: Dockerfile-ingestion
           push: true
-          tags: daappoc25.azurecr.io/ingestion:2.7.3
+          tags: daappoc25.azurecr.io/ingestion:2.7.3-om
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -80,16 +80,17 @@ jobs:
             --namespace daap-dev \
             --create-namespace \
             -f charts/openmetadata/airflow-config.yaml \
-            --timeout 15m
-          kubectl patch deployment airflow-webserver \
-            -n daap-dev \
-            --type=json \
-            -p='[
-              {
-                "op": "remove",
-                "path": "/spec/template/spec/containers/0/startupProbe"
-              }
-            ]'
+            --timeout 15m \
+            --reuse-values=false
+          # kubectl patch deployment airflow-webserver \
+          #   -n daap-dev \
+          #   --type=json \
+          #   -p='[
+          #     {
+          #       "op": "remove",
+          #       "path": "/spec/template/spec/containers/0/startupProbe"
+          #     }
+          #   ]'
 
 
 
