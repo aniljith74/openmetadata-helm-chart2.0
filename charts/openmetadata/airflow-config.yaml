@@ -9,7 +9,6 @@ images:
 postgresql:
   enabled: false
 
-
 data:
   metadataConnection:
     protocol: postgresql
@@ -23,25 +22,8 @@ data:
 airflow:
   config:
     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
-    AIRFLOW__CORE__LOAD_EXAMPLES:
-      value: "false"
-
-    AIRFLOW__WEBSERVER__AUTHENTICATE:
-      value: "False"
-
-    AIRFLOW__WEBSERVER__RBAC:
-      value: "true"
-
-    AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
-      value: "true"
-  
-  users:
-    - username: admin
-      password: admin
-      role: Admin
-      email: admin@example.com
-      firstName: Admin
-      lastName: User
+    AIRFLOW__CORE__AUTH_MANAGER: airflow.auth.managers.simple.SimpleAuthManager
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
 
 logs:
   persistence:
@@ -51,6 +33,7 @@ logs:
 webserver:
   service:
     type: LoadBalancer
+
   livenessProbe:
     initialDelaySeconds: 120
     periodSeconds: 30
@@ -61,5 +44,3 @@ webserver:
     initialDelaySeconds: 120
     periodSeconds: 15
     timeoutSeconds: 5
-    failureThreshold: 10
-
