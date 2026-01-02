@@ -38,13 +38,13 @@ jobs:
           push: true
           tags: daappoc25.azurecr.io/openmetadata:1.11.3
 
-      - name: Build & Push Ingestion Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: Dockerfile-ingestion
-          push: true
-          tags: daappoc25.azurecr.io/ingestion:1.11.4
+      # - name: Build & Push Ingestion Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     file: Dockerfile-ingestion
+      #     push: true
+      #     tags: daappoc25.azurecr.io/ingestion:1.11.4
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -72,13 +72,30 @@ jobs:
             --namespace daap-dev \
             -f charts/openmetadata/values.yaml \
             --timeout 15m
+          # kubectl apply -f charts/openmetadata/airflow-pvc.yaml
+          # kubectl apply -f charts/openmetadata/airflow-dag-pvc.yaml
+          # helm upgrade --install openmetadata-dependencies open-metadata/openmetadata-dependencies \
+          #   --namespace daap-dev \
+          #   -f charts/openmetadata/values-airflow.yaml \
+          #   --timeout 20m
+          # kubectl patch deployment openmetadata-dependencies-api-server \
+          #   -n daap-dev \
+          #   --type=json \
+          #   -p='[
+          #     {
+          #       "op": "remove",
+          #       "path": "/spec/template/spec/containers/0/startupProbe"
+          #     }
+          #   ]'
+   
+      - name: Deploy Airflow
+        run: |
           kubectl apply -f charts/openmetadata/airflow-pvc.yaml
-          kubectl apply -f charts/openmetadata/airflow-dag-pvc.yaml
-          helm upgrade --install openmetadata-dependencies open-metadata/openmetadata-dependencies \
+          helm upgrade --install airflow apache-airflow/airflow \
             --namespace daap-dev \
-            -f charts/openmetadata/values-airflow.yaml \
-            --timeout 20m
-          kubectl patch deployment openmetadata-dependencies-api-server \
+            -f charts/openmetadata/airflow-config.yaml \
+            --timeout 15m
+          kubectl patch deployment airflow-webserver \
             -n daap-dev \
             --type=json \
             -p='[
@@ -87,6 +104,8 @@ jobs:
                 "path": "/spec/template/spec/containers/0/startupProbe"
               }
             ]'
+
+
 
           # kubectl create configmap snowflake-ingestion-config \
           #   -n daap-dev \
@@ -106,23 +125,3 @@ jobs:
           #   --dry-run=client -o yaml | kubectl apply -f -
           # kubectl apply -f charts/openmetadata/snowflake-profiler-job.yaml
           # kubectl apply -f charts/openmetadata/snowflake-auto-classification-job.yaml
-
-
-
-          
-      # - name: Deploy Airflow
-      #   run: |
-      #     kubectl apply -f charts/openmetadata/airflow-pvc.yaml
-      #     helm upgrade --install airflow apache-airflow/airflow \
-      #       --namespace daap-dev \
-      #       -f charts/openmetadata/airflow-config.yaml \
-      #       --timeout 15m
-      #     kubectl patch deployment airflow-webserver \
-      #       -n daap-dev \
-      #       --type=json \
-      #       -p='[
-      #         {
-      #           "op": "remove",
-      #           "path": "/spec/template/spec/containers/0/startupProbe"
-      #         }
-      #       ]'

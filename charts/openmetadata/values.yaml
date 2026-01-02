@@ -43,31 +43,17 @@ openmetadata:
     pipelineServiceClientConfig:
       enabled: true
       className: "org.openmetadata.service.clients.pipeline.airflow.AirflowRESTClient"
-      apiEndpoint: "http://openmetadata-dependencies-api-server.daap-dev.svc.cluster.local:8080"
+
+      apiEndpoint: "http://airflow-webserver.daap-dev.svc.cluster.local:8080"
       metadataApiEndpoint: "http://openmetadata:8585/api"
       verifySsl: "no-ssl"
 
       auth:
-        enabled: false
-
-    authorizer:
-      enabled: true
-      className: "org.openmetadata.service.security.DefaultAuthorizer"
-      containerRequestFilter: "org.openmetadata.service.security.JwtFilter"
-      initialAdmins:
-        - admin
-
-    authentication:
-      enabled: true
-      provider: basic
-      publicKeys:
-        - "http://openmetadata:8585/api/v1/system/config/jwks"
-      jwtPrincipalClaims:
-        - email
-        - preferred_username
-        - sub
-      enableSelfSignup: true
-
+        enabled: true
+        provider: jwt
+        token:
+          secretRef: airflow-jwt-secret
+          secretKey: token
 
     secretsManager:
       enabled: true
