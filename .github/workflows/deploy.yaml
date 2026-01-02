@@ -75,13 +75,11 @@ jobs:
    
       - name: Deploy Airflow
         run: |
-          kubectl apply -f charts/openmetadata/airflow-pvc.yaml
-          helm upgrade --install airflow apache-airflow/airflow \
+          helm upgrade --install airflow \
             https://github.com/apache/airflow/releases/download/helm-chart%2F1.13.1/airflow-1.13.1.tgz \
             --namespace daap-dev \
-            --version 1.13.1 \
             -f charts/openmetadata/airflow-config.yaml \
-            --timeout 15m 
+            --timeout 15m
           # kubectl patch deployment airflow-webserver \
           #   -n daap-dev \
           #   --type=json \
