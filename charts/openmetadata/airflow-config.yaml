@@ -3,7 +3,7 @@ executor: LocalExecutor
 images:
   airflow:
     repository: daappoc25.azurecr.io/ingestion
-    tag: 3.1.5
+    tag: 2.7.3
     pullPolicy: Always
 
 postgresql:
@@ -24,7 +24,6 @@ airflow:
     enabled: false
   config:
     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
-    AIRFLOW__CORE__AUTH_MANAGER: airflow.auth.managers.simple.SimpleAuthManager
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
 
 logs:
