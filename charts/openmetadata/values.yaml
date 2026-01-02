@@ -41,7 +41,7 @@ openmetadata:
       dbParams: "sslmode=disable"
 
     pipelineServiceClientConfig:
-      enabled: false
+      enabled: true
       className: "org.openmetadata.service.clients.pipeline.airflow.AirflowRESTClient"
       apiEndpoint: "http://airflow-webserver.daap-dev.svc.cluster.local:8080"
       metadataApiEndpoint: "http://openmetadata:8585/api"
@@ -53,6 +53,25 @@ openmetadata:
         password:
           secretRef: airflow-secrets
           secretKey: openmetadata-airflow-password
+
+    authorizer:
+      enabled: true
+      className: "org.openmetadata.service.security.DefaultAuthorizer"
+      containerRequestFilter: "org.openmetadata.service.security.JwtFilter"
+      initialAdmins:
+        - admin
+
+    authentication:
+      enabled: true
+      provider: basic
+      publicKeys:
+        - "http://openmetadata:8585/api/v1/system/config/jwks"
+      jwtPrincipalClaims:
+        - email
+        - preferred_username
+        - sub
+      enableSelfSignup: true
+
 
     secretsManager:
       enabled: true
@@ -70,7 +89,7 @@ openmetadata:
 
 image:
   repository: daappoc25.azurecr.io/openmetadata
-  tag: 1.11.3
+  tag: latest
   pullPolicy: IfNotPresent
 
 fullnameOverride: openmetadata

@@ -2,12 +2,13 @@ executor: LocalExecutor
 
 images:
   airflow:
-    repository: apache/airflow
+    repository: daappoc25.azurecr.io/airflow
     tag: 2.7.3
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
 postgresql:
   enabled: false
+
 
 data:
   metadataConnection:
@@ -20,12 +21,23 @@ data:
     sslmode: disable
 
 airflow:
+  configOverrides:
+    airflow.cfg: |
+      [api]
+      auth_backends = airflow.api.auth.backend.basic_auth
   config:
-    api:
-      auth_backends: airflow.api.auth.backend.jwt_auth
-    webserver:
-      rbac: "false"
+    AIRFLOW__CORE__LOAD_EXAMPLES:
+      value: "false"
 
+    AIRFLOW__WEBSERVER__AUTHENTICATE:
+      value: "False"
+
+    AIRFLOW__WEBSERVER__RBAC:
+      value: "true"
+
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
+      value: "true"
+  
   users:
     - username: admin
       password: admin
@@ -39,32 +51,18 @@ logs:
     enabled: true
     existingClaim: airflow-logs
 
-
-scheduler:
-  startupProbe:
-    failureThreshold: 30
-    periodSeconds: 10
-    timeoutSeconds: 30
-
-  livenessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
-
-
 webserver:
   service:
     type: LoadBalancer
-
   livenessProbe:
     initialDelaySeconds: 120
     periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
+    timeoutSeconds: 5
+    failureThreshold: 10
 
   readinessProbe:
     initialDelaySeconds: 120
-    periodSeconds: 30
-    timeoutSeconds: 30
-    failureThreshold: 5
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 10
+
