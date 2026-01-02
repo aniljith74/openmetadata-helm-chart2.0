@@ -43,7 +43,7 @@ openmetadata:
     pipelineServiceClientConfig:
       enabled: true
       className: "org.openmetadata.service.clients.pipeline.airflow.AirflowRESTClient"
-      apiEndpoint: "http://airflow-webserver.daap-dev.svc.cluster.local:8080"
+      apiEndpoint: "http://20.161.94.122:8080"
       metadataApiEndpoint: "http://openmetadata:8585/api"
       verifySsl: "no-ssl"
 
