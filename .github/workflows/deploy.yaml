@@ -95,15 +95,15 @@ jobs:
             --namespace daap-dev \
             -f charts/openmetadata/airflow-config.yaml \
             --timeout 15m
-          kubectl patch deployment airflow-webserver \
-            -n daap-dev \
-            --type=json \
-            -p='[
-              {
-                "op": "remove",
-                "path": "/spec/template/spec/containers/0/startupProbe"
-              }
-            ]'
+          # kubectl patch deployment airflow-api-server\
+          #   -n daap-dev \
+          #   --type=json \
+          #   -p='[
+          #     {
+          #       "op": "remove",
+          #       "path": "/spec/template/spec/containers/0/startupProbe"
+          #     }
+          #   ]'
 
 
 

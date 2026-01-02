@@ -1,14 +1,16 @@
+apiServer:
+  enabled: false
+
 executor: LocalExecutor
 
 images:
   airflow:
     repository: apache/airflow
-    tag: 2.9.2  
+    tag: 2.7.3
     pullPolicy: IfNotPresent
 
 postgresql:
   enabled: false
-
 
 data:
   metadataConnection:
@@ -26,7 +28,7 @@ airflow:
       auth_backends: airflow.api.auth.backend.jwt_auth
     webserver:
       rbac: "false"
-  
+
   users:
     - username: admin
       password: admin
@@ -40,17 +42,37 @@ logs:
     enabled: true
     existingClaim: airflow-logs
 
-webserver:
-  service:
-    type: LoadBalancer
+scheduler:
+  startupProbe:
+    enabled: true
+    failureThreshold: 30
+    periodSeconds: 10
+    timeoutSeconds: 30
+
   livenessProbe:
     initialDelaySeconds: 120
     periodSeconds: 30
-    timeoutSeconds: 5
-    failureThreshold: 10
+    timeoutSeconds: 30
+    failureThreshold: 5
 
   readinessProbe:
     initialDelaySeconds: 120
-    periodSeconds: 15
-    timeoutSeconds: 5
-    failureThreshold: 10
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
+
+webserver:
+  service:
+    type: LoadBalancer
+
+  livenessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
+
+  readinessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    timeoutSeconds: 30
+    failureThreshold: 5
