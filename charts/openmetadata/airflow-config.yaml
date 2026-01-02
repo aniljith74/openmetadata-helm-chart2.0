@@ -23,11 +23,12 @@ data:
 airflow:
   extraPipPackages:
     - "openmetadata-ingestion[airflow]"
-  configOverrides:
-    airflow.cfg: |
-      [api]
-      auth_backends = airflow.api.auth.backend.jwt_auth
+  # configOverrides:
+  #   airflow.cfg: |
+  #     [api]
+  #     auth_backends = airflow.api.auth.backend.jwt_auth
   config:
+    AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
     AIRFLOW__CORE__LOAD_EXAMPLES:
       value: "false"
 
