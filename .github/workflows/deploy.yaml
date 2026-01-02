@@ -55,7 +55,7 @@ jobs:
         run: |
           helm repo add open-metadata https://helm.open-metadata.org
           helm repo add opensearch https://opensearch-project.github.io/helm-charts
-          #helm repo add apache-airflow https://airflow.apache.org
+          helm repo add apache-airflow https://airflow.apache.org
           helm repo update
                             
 
