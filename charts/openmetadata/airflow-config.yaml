@@ -20,6 +20,8 @@ data:
     sslmode: disable
 
 airflow:
+  authManager:
+    enabled: false
   config:
     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
     AIRFLOW__CORE__AUTH_MANAGER: airflow.auth.managers.simple.SimpleAuthManager
