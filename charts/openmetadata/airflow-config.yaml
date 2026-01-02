@@ -2,8 +2,8 @@ executor: LocalExecutor
 
 images:
   airflow:
-    repository: daappoc25.azurecr.io
-    tag: airflow-ingestion
+    repository: apache/airflow
+    tag: 2.7.3-python3.10
     pullPolicy: Always
 
 postgresql:
@@ -20,8 +20,8 @@ data:
     sslmode: disable
 
 airflow:
-  authManager:
-    enabled: false
+  extraPipPackages:
+    - "openmetadata-airflow-apis==1.11.3"
   config:
     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
