@@ -2,8 +2,8 @@ executor: LocalExecutor
 
 images:
   airflow:
-    repository: daappoc25.azurecr.io/airflow
-    tag: 2.7.3
+    repository: daappoc25.azurecr.io/ingestion
+    tag: 1.11.4
     pullPolicy: Always
 
 postgresql:
