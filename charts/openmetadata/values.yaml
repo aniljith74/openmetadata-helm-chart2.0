@@ -41,19 +41,18 @@ openmetadata:
       dbParams: "sslmode=disable"
 
     pipelineServiceClientConfig:
-      enabled: true
+      enabled: false
       className: "org.openmetadata.service.clients.pipeline.airflow.AirflowRESTClient"
-    
-      apiEndpoint: "http://airflow-auth-proxy.daap-dev.svc.cluster.local:8080"
+      apiEndpoint: "http://airflow-webserver.daap-dev.svc.cluster.local:8080"
       metadataApiEndpoint: "http://openmetadata:8585/api"
       verifySsl: "no-ssl"
-    
+
       auth:
         enabled: true
-        username: om_api
+        username: admin
         password:
-          secretRef: airflow-basic-auth
-          secretKey: password
+          secretRef: airflow-secrets
+          secretKey: openmetadata-airflow-password
 
     secretsManager:
       enabled: true
