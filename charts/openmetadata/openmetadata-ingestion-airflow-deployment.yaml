@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openmetadata-ingestion-airflow
+  namespace: daap-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openmetadata-ingestion-airflow
+  template:
+    metadata:
+      labels:
+        app: openmetadata-ingestion-airflow
+    spec:
+      containers:
+        - name: airflow
+          image: docker.getcollate.io/openmetadata/ingestion:1.11.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+
+          env:
+            # ---------------- Airflow core ----------------
+            - name: AIRFLOW__CORE__EXECUTOR
+              value: LocalExecutor
+            - name: AIRFLOW__API__AUTH_BACKENDS
+              value: "airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session"
+
+            # ---------------- Existing Postgres (YOUR DB) ----------------
+            - name: DB_SCHEME
+              value: postgresql+psycopg2
+            - name: DB_HOST
+              value: postgres.daap-dev.svc.cluster.local
+            - name: DB_PORT
+              value: "5432"
+            - name: AIRFLOW_DB
+              value: airflow
+            - name: DB_USER
+              value: airflow
+            - name: DB_PASSWORD
+              value: airflow
+            - name: DB_PROPERTIES
+              value: "?sslmode=disable"
+
+            # ---------------- OpenMetadata DAG config ----------------
+            - name: AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS
+              value: /opt/airflow/dag_generated_configs
+
+          command: ["/bin/bash"]
+          args:
+            - "-c"
+            - |
+              /opt/airflow/ingestion_dependency.sh

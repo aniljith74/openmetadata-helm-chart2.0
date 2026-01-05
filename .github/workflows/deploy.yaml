@@ -36,7 +36,7 @@ jobs:
           context: .
           file: Dockerfile-openmetadata
           push: true
-          tags: daappoc25.azurecr.io/openmetadata:1.11.3
+          tags: daappoc25.azurecr.io/openmetadata:ingestion-latest
 
       - name: Build & Push Ingestion Image
         uses: docker/build-push-action@v4
@@ -72,41 +72,32 @@ jobs:
             --namespace daap-dev \
             -f charts/openmetadata/values.yaml \
             --timeout 15m
-   
-      - name: Deploy Airflow
+
+      - name: Deploy OpenMetadata Ingestion (Managed Airflow)
         run: |
-          helm upgrade --install airflow \
-            https://github.com/apache/airflow/releases/download/helm-chart%2F1.13.1/airflow-1.13.1.tgz \
-            --namespace daap-dev \
-            -f charts/openmetadata/airflow-config.yaml \
-            --timeout 15m
-          kubectl patch deployment airflow-webserver \
-            -n daap-dev \
-            --type=json \
-            -p='[
-              {
-                "op": "remove",
-                "path": "/spec/template/spec/containers/0/startupProbe"
-              }
-            ]'
-
-
-
+          kubectl apply -n daap-dev -f charts/openmetadata/openmetadata-ingestion-airflow-deployment.yaml
+          kubectl apply -n daap-dev -f charts/openmetadata/openmetadata-ingestion-airflow-service.yaml
+          kubectl rollout status deployment/openmetadata-ingestion-airflow \
+            -n daap-dev --timeout=300s
+   
+      # - name: Deploy Airflow
+      #   run: |
+      #     helm upgrade --install airflow \
+      #       https://github.com/apache/airflow/releases/download/helm-chart%2F1.13.1/airflow-1.13.1.tgz \
+      #       --namespace daap-dev \
+      #       -f charts/openmetadata/airflow-config.yaml \
+      #       --timeout 15m
+      #     kubectl patch deployment airflow-webserver \
+      #       -n daap-dev \
+      #       --type=json \
+      #       -p='[
+      #         {
+      #           "op": "remove",
+      #           "path": "/spec/template/spec/containers/0/startupProbe"
+      #         }
+      #       ]'
           # kubectl create configmap snowflake-ingestion-config \
           #   -n daap-dev \
           #   --from-file=charts/openmetadata/snowflake-ingestion.yaml \
           #   --dry-run=client -o yaml | kubectl apply -f -
           # kubectl apply -f charts/openmetadata/snowflake-ingestion-job.yaml
-          # kubectl create configmap snowflake-lineage-config \
-          #   -n daap-dev \
-          #   --from-file=charts/openmetadata/snowflake-lineage.yaml \
-          #   --dry-run=client -o yaml | kubectl apply -f -
-          # kubectl apply -f charts/openmetadata/snowflake-lineage-job.yaml
-
-          # kubectl create configmap snowflake-profiler-classification-config \
-          #   -n daap-dev \
-          #   --from-file=charts/openmetadata/snowflake-profiler.yaml \
-          #   --from-file=charts/openmetadata/snowflake-auto-classification.yaml \
-          #   --dry-run=client -o yaml | kubectl apply -f -
-          # kubectl apply -f charts/openmetadata/snowflake-profiler-job.yaml
-          # kubectl apply -f charts/openmetadata/snowflake-auto-classification-job.yaml

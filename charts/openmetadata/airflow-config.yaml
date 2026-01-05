@@ -2,7 +2,7 @@ executor: LocalExecutor
 
 images:
   airflow:
-    repository: apache/airflow
+    repository: openmetadata/airflow
     tag: 2.7.3-python3.10
     pullPolicy: Always
 
