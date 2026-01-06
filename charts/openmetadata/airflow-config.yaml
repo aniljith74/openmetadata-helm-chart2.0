@@ -1,47 +1,47 @@
-executor: LocalExecutor
+# executor: LocalExecutor
 
-images:
-  airflow:
-    repository: openmetadata/airflow
-    tag: 2.7.3-python3.10
-    pullPolicy: Always
+# images:
+#   airflow:
+#     repository: openmetadata/airflow
+#     tag: 2.7.3-python3.10
+#     pullPolicy: Always
 
-postgresql:
-  enabled: false
+# postgresql:
+#   enabled: false
 
-data:
-  metadataConnection:
-    protocol: postgresql
-    host: postgres.daap-dev.svc.cluster.local
-    port: 5432
-    db: airflow
-    user: airflow
-    pass: airflow
-    sslmode: disable
+# data:
+#   metadataConnection:
+#     protocol: postgresql
+#     host: postgres.daap-dev.svc.cluster.local
+#     port: 5432
+#     db: airflow
+#     user: airflow
+#     pass: airflow
+#     sslmode: disable
 
-airflow:
-  extraPipPackages:
-    - "openmetadata-airflow-apis==1.11.3"
-  config:
-    AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
-    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+# airflow:
+#   extraPipPackages:
+#     - "openmetadata-airflow-apis==1.11.3"
+#   config:
+#     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+#     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
 
-logs:
-  persistence:
-    enabled: true
-    existingClaim: airflow-logs
+# logs:
+#   persistence:
+#     enabled: true
+#     existingClaim: airflow-logs
 
-webserver:
-  service:
-    type: LoadBalancer
+# webserver:
+#   service:
+#     type: LoadBalancer
 
-  livenessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    timeoutSeconds: 5
-    failureThreshold: 10
+#   livenessProbe:
+#     initialDelaySeconds: 120
+#     periodSeconds: 30
+#     timeoutSeconds: 5
+#     failureThreshold: 10
 
-  readinessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 15
-    timeoutSeconds: 5
+#   readinessProbe:
+#     initialDelaySeconds: 120
+#     periodSeconds: 15
+#     timeoutSeconds: 5

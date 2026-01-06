@@ -38,14 +38,6 @@ jobs:
           push: true
           tags: daappoc25.azurecr.io/openmetadata:ingestion-latest
 
-      - name: Build & Push Ingestion Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: Dockerfile-ingestion
-          push: true
-          tags: daappoc25.azurecr.io/ingestion:airflow-ingestion
-
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
@@ -55,7 +47,6 @@ jobs:
         run: |
           helm repo add open-metadata https://helm.open-metadata.org
           helm repo add opensearch https://opensearch-project.github.io/helm-charts
-          helm repo add apache-airflow https://airflow.apache.org
           helm repo update
                             
 
@@ -77,27 +68,3 @@ jobs:
         run: |
           kubectl apply -n daap-dev -f charts/openmetadata/openmetadata-ingestion-airflow-deployment.yaml
           kubectl apply -n daap-dev -f charts/openmetadata/openmetadata-ingestion-airflow-service.yaml
-          kubectl rollout status deployment/openmetadata-ingestion-airflow \
-            -n daap-dev --timeout=300s
-   
-      # - name: Deploy Airflow
-      #   run: |
-      #     helm upgrade --install airflow \
-      #       https://github.com/apache/airflow/releases/download/helm-chart%2F1.13.1/airflow-1.13.1.tgz \
-      #       --namespace daap-dev \
-      #       -f charts/openmetadata/airflow-config.yaml \
-      #       --timeout 15m
-      #     kubectl patch deployment airflow-webserver \
-      #       -n daap-dev \
-      #       --type=json \
-      #       -p='[
-      #         {
-      #           "op": "remove",
-      #           "path": "/spec/template/spec/containers/0/startupProbe"
-      #         }
-      #       ]'
-          # kubectl create configmap snowflake-ingestion-config \
-          #   -n daap-dev \
-          #   --from-file=charts/openmetadata/snowflake-ingestion.yaml \
-          #   --dry-run=client -o yaml | kubectl apply -f -
-          # kubectl apply -f charts/openmetadata/snowflake-ingestion-job.yaml

@@ -21,13 +21,11 @@ spec:
             - containerPort: 8080
 
           env:
-            # ---------------- Airflow core ----------------
             - name: AIRFLOW__CORE__EXECUTOR
               value: LocalExecutor
             - name: AIRFLOW__API__AUTH_BACKENDS
               value: "airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session"
 
-            # ---------------- Existing Postgres (YOUR DB) ----------------
             - name: DB_SCHEME
               value: postgresql+psycopg2
             - name: DB_HOST
